@@ -1,0 +1,29 @@
+.navbar {
+    float: left;
+    width: 100%;
+}
+
+.navbar-brand img {
+    width: 14%;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff !important;
+    font-size: 17px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.dropdown>div {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200px;
+}
+
+.dropdown:last-of-type>div {
+    right: 0;
+    left: auto;
+}
