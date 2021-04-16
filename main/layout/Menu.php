@@ -11,13 +11,13 @@
                 <a class="nav-link" target="_blank" href="./Home.php">Page d'accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_blank" href="#">Produits</a>
+                <a class="nav-link" target="_blank" href="./Produits.php">Produits</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_blank" href="#">Livres</a>
+                <a class="nav-link" target="_blank" href="./Livres.php">Livres</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_blank" href="#">Achat</a>
+                <a class="nav-link" target="_blank" href="./Achat.php">Achat</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>

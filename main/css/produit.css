@@ -7,6 +7,10 @@
     float: left;
 }
 
+.product-div h5 {
+    height: 50px;
+}
+
 .product-image,
 .product-details {
     float: left;

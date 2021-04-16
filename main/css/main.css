@@ -22,14 +22,6 @@ p {
     width: 100%;
 }
 
-label {
-    float: left;
-    width: 100%;
-    margin: 15px 0;
-    font-weight: bold;
-    font-size: 17px;
-}
-
 ul {
     margin: 0;
     padding: 0;
@@ -104,15 +96,34 @@ footer {
 
 /* Global CSS */
 
+form {
+    float: left;
+    width: 100%;
+}
+
 input,
 select {
     width: 100%;
     float: left;
 }
 
-form {
+label {
     float: left;
     width: 100%;
+    margin: 10px 0;
+    font-size: 17px;
+}
+
+.form-group {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.text-muted {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
 }
 
 
