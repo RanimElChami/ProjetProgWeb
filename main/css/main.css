@@ -190,72 +190,66 @@ label {
 
 /* About us */
 
-.aboutus {
-    width: 100%;
-    margin-top: 25px;
-    height: 550px;
-}
 
-.aboutustitre {
+
+.about-us-titre {
     text-align: center;
     text-decoration: underline;
 }
 
-.aboutuscont {
-    float: left;
+.about-us-cont {
+    display: grid;
     margin: 25px;
+    grid-template-columns: auto auto;
+    grid-gap: 50px;
 }
 
-.aboutusimg {
+.about-us-img {
     float: left;
-    width: 50%;
+    width: 100%;
 }
 
-.aboutusimg img {
+.about-us-img img {
     width: 100%
 }
 
-.aboutustxt {
+.about-us-txt {
     text-align: center;
-    width: 50%;
-    float: right;
-    padding: 180px 40px 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 
 /* Nos livres et produits */
 
-.noslivres,
-.nosproduits {
-    height: 700px;
-    width: 100%;
-}
 
-.noslivresprod {
+
+.nos-livres-prod {
     height: 500px;
 }
 
-.noslivrestitre {
+.nos-livres-titre {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 60px;
     text-decoration: underline;
 }
 
-.noslivresimg {
+.nos-livres-img {
     padding: 20px;
 }
 
-.nosprodtitre {
+.nos-prod-titre {
     margin-top: 50px;
 }
 
-.noslivreslien {
+.nos-livres-lien {
     text-align: center;
     margin-top: 25px;
 }
 
-.noslivreslien a {
+.nos-livres-lien a {
     border: none;
     padding: 8px 32px;
     border-radius: 8px;

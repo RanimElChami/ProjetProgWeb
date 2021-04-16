@@ -1,0 +1,55 @@
+*{
+	margin:0;
+	padding:0;
+}
+h4{
+	color:#343a40;
+}
+
+.infos-pers{
+	border: 1.5px solid #343a40;
+	margin:2%;
+	width: 97%;
+}
+.infos-titre{
+	text-align: center;
+}
+.infos-content{
+	width: 100%;
+	display:flex;
+	justify-content: space-between;
+
+}
+
+.infos-content div{
+	display:grid;
+}
+.form-order{
+	height: 200px;
+}
+.form-order div form{
+	margin-left:10%;
+}
+.form-order div form div{
+	float: left;
+	width: 25%;
+	padding-left: 2%;
+
+}
+
+.prod-sel{
+	border: 1.5px solid #343a40;
+	margin:2%;
+	width: 97%;
+	height: 600px;
+}
+.prod-sel-content{
+	width: 100%;
+	display:flex;
+	justify-content: space-between;
+
+}
+
+.prod-sel-content div{
+	display:grid;
+}

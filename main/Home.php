@@ -23,34 +23,40 @@
     	<div class="swiper-pagination"></div>
   	</div>
 
-  	<div class="aboutus">
-  		<div class="aboutustitre">
+  	<section>
+      <div class="container">
+  		<div class="about-us-titre">
   			<h1>About us</h1>
   		</div>
-  		<div class="aboutuscont">
-  		<div class="aboutusimg">
+  		<div class="about-us-cont">
+  		<div class="about-us-img">
   			<img src="./images/Shakespeare_and_Company_bookstore.png" alt="Bookstore image"/>
   		</div>
-  		<div class="aboutustxt">
+  		<div class="about-us-txt">
   			<i>I created this bookstore like a man would write a novel, building each room like a chapter, and I like people to open the door the way they open a book, a book that leads into a magic world in their imaginations. —George Whitman</i>
   		</div>
   		</div>
   	</div>
 
-  	<div class="noslivres">
-  		<div class="noslivrestitre">
+  </section>
+
+  	<section>
+      <div class="container">
+  		<div class="nos-livres-titre">
   			<h1>Nos livres</h1>
   		</div>
   		<!--Livres  -->
-  		<div class="noslivresprod">
+  		<div class="nos-livres-prod">
   			<div class="product-div">
                 <div class="product-image">
                     <img src='./images/cien-anos-soledad.png' alt='Cien anos soledad' />
                 </div>
                 <div class="product-details">
-                    <h5>Cien años de soledad</h5>
+                    <h5>Cien Años De Soledad</h5>
+                    <p>Gabriel García márquez</p>
                     <p>Ref. 001<b> 150€</b></p>
                     <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
+                    <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                 </div>
             </div>
             <div class="product-div">
@@ -58,32 +64,38 @@
                     <img src='./images/the_alchemist_.png' alt='The Alchemist' />
                 </div>
                 <div class="product-details">
-                    <h5>The alchemist</h5>
+                    <h5>The Alchemist</h5>
+                    <p>Paulo Cohelo</p>
                     <p>Ref. 002<b> 15€</b></p>
                     <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
+                    <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                 </div>
             </div>
-  			<div class="product-div">
+            <div class="product-div">
                 <div class="product-image">
                     <img src='./images/le_parfum.png' alt='Le Parfum' />
                 </div>
                 <div class="product-details">
-                    <h5>Le parfum</h5>
+                    <h5>Le Parfum</h5>
+                    <p>Patrick Süskind</p>
                     <p>Ref. 003<b> 15€</b></p>
                     <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
+                    <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                 </div>
             </div>
   		</div>
-  		<div class="noslivreslien">
+  		<div class="nos-livres-lien">
   				<a href="./Livres.php">Découvrir plus</a>
   		</div>
   	</div>
+  </section>
 
-  	<div class="nosproduits">
-  		<div class="noslivrestitre">
+  	<section>
+      <div class="container">
+  		<div class="nos-livres-titre">
   			<h1>Nos produits</h1>
   		</div>
-  		<div class="noslivresprod">
+  		<div class="nos-livres-prod">
 		  <div class="product-div">
                 <div class="product-image">
                     <img src="./images/chaise1.jpg" alt="Product Image" />
@@ -117,11 +129,12 @@
                     <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                 </div>
             </div>
-	        <div class="noslivreslien">
+          </div>
+	        <div class="nos-livres-lien">
   				<a href="./Produits.php">Découvrir plus</a>
   			</div>
 		</div>
-  	</div>
+  </section>
 
 	<?php include('layout/Footer.php'); ?>
 
