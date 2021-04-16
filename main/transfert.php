@@ -1,6 +1,7 @@
 <?php
-    include('../APIs/include/dbConnection.php');
+
     function transfert(){
+        include('../APIs/include/dbConnection.php');
         $ret        = false;
         $img_blob   = '';
         $img_taille = 0;
@@ -25,14 +26,12 @@
             $img_nom  = $_FILES['fic']['name'];
 
             $img_blob = file_get_contents ($_FILES['fic']['tmp_name']);
-            $req = "INSERT INTO images (" .
-                            "img_nom, img_taille, img_type, img_blob " .
-                            ") VALUES (" .
-                            "'" . $img_nom . "', " .
-                            "'" . $img_taille . "', " .
-                            "'" . $img_type . "', " .
-                            "'" . addslashes ($img_blob) . "') "; // N'oublions pas d'échapper le contenu binaire
-            $ret = mysqli_query($req) or die(mysql_error ());
+            $stmt = $conn -> prepare('INSERT INTO images(img_nom, img_taille,
+            img_type, img_blob) values (?,?,?,?)');
+            $stmt -> bind_param('ssss', $img_nom, $img_taille, $img_type, addslashes($img_blob));
+            $stmt -> execute();
+            $stmt -> close();
+            echo "<script>console.log('in else')</script>";
             return true;
         }
     }

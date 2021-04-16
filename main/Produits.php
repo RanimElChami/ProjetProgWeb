@@ -10,6 +10,13 @@
 <body>
     <?php include('layout/Menu.php'); ?>
 
+    <?php
+        include ("./transfert.php");
+        if (isset($_FILES['fic'])){
+            transfert();
+        }
+    ?>
+
     <section class="liste-produits">
         <div class="container">
             <!-- Chaises -->

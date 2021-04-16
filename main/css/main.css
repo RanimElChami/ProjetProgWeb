@@ -168,9 +168,6 @@ label {
     bottom: 0 !important;
 }
 
-
-/*  */
-
 .swiper-slide {
     text-align: center;
     font-size: 18px;
@@ -191,7 +188,7 @@ label {
 }
 
 
-/*About us*/
+/* About us */
 
 .aboutus {
     width: 100%;
@@ -226,7 +223,7 @@ label {
 }
 
 
-/*Nos livres et produits*/
+/* Nos livres et produits */
 
 .noslivres,
 .nosproduits {
@@ -266,51 +263,4 @@ label {
     color: #FFFF;
     position: initial;
     height: auto;
-}
-
-.product-div {
-    position: relative;
-    width: 33.3%;
-    padding-right: 15px;
-    padding-left: 139px;
-    margin: 15px 0;
-    float: left;
-}
-
-.product-div h5 {
-    height: 70px;
-}
-
-.product-image,
-.product-details {
-    float: left;
-    width: 100%;
-}
-
-.product-image {
-    margin-bottom: 15px;
-}
-
-.product-image img {
-    margin-right: auto;
-    display: block;
-    height: 300px;
-    width: auto;
-}
-
-.product-div .btn {
-    display: block;
-    float: left;
-    width: 49% !important;
-    margin-right: 1%;
-}
-
-.product-details p {
-    font-size: 16px;
-    margin-bottom: 10px !important;
-}
-
-.product-details .btn {
-    float: left;
-    width: 100%;
 }
