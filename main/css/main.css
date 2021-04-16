@@ -167,3 +167,150 @@ label {
 .swiper-pagination-fraction {
     bottom: 0 !important;
 }
+
+
+/*  */
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+
+/*About us*/
+
+.aboutus {
+    width: 100%;
+    margin-top: 25px;
+    height: 550px;
+}
+
+.aboutustitre {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.aboutuscont {
+    float: left;
+    margin: 25px;
+}
+
+.aboutusimg {
+    float: left;
+    width: 50%;
+}
+
+.aboutusimg img {
+    width: 100%
+}
+
+.aboutustxt {
+    text-align: center;
+    width: 50%;
+    float: right;
+    padding: 180px 40px 40px;
+}
+
+
+/*Nos livres et produits*/
+
+.noslivres,
+.nosproduits {
+    height: 700px;
+    width: 100%;
+}
+
+.noslivresprod {
+    height: 500px;
+}
+
+.noslivrestitre {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    text-decoration: underline;
+}
+
+.noslivresimg {
+    padding: 20px;
+}
+
+.nosprodtitre {
+    margin-top: 50px;
+}
+
+.noslivreslien {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.noslivreslien a {
+    border: none;
+    padding: 8px 32px;
+    border-radius: 8px;
+    background: #343a40;
+    color: #FFFF;
+    position: initial;
+    height: auto;
+}
+
+.product-div {
+    position: relative;
+    width: 33.3%;
+    padding-right: 15px;
+    padding-left: 139px;
+    margin: 15px 0;
+    float: left;
+}
+
+.product-div h5 {
+    height: 70px;
+}
+
+.product-image,
+.product-details {
+    float: left;
+    width: 100%;
+}
+
+.product-image {
+    margin-bottom: 15px;
+}
+
+.product-image img {
+    margin-right: auto;
+    display: block;
+    height: 300px;
+    width: auto;
+}
+
+.product-div .btn {
+    display: block;
+    float: left;
+    width: 49% !important;
+    margin-right: 1%;
+}
+
+.product-details p {
+    font-size: 16px;
+    margin-bottom: 10px !important;
+}
+
+.product-details .btn {
+    float: left;
+    width: 100%;
+}

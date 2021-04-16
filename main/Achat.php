@@ -8,6 +8,12 @@
 </head>
 
 <body>
+    <?php
+        include ("transfert.php");
+        if (isset($_FILES['fic'])){
+            transfert();
+        }
+      ?>
     <?php include('layout/Menu.php'); ?>
 
     <section class="achat-formulaire">
