@@ -4,6 +4,7 @@
 <head>
     <title>Accueil</title>
     <?php include('layout/Header.php')?>
+    <?php include ('../APIs/include/dbConnection.php'); ?>
 	<link rel="stylesheet" href="css/produit.css"/>
 	<link rel="stylesheet" href="css/swiper-bundle.min.css"/>
 </head>
@@ -47,42 +48,27 @@
   		</div>
   		<!--Livres  -->
   		<div class="nos-livres-prod">
-  			<div class="product-div">
-                <div class="product-image">
-                    <img src='./images/cien-anos-soledad.png' alt='Cien anos soledad' />
-                </div>
-                <div class="product-details">
-                    <h5>Cien Años De Soledad</h5>
-                    <p>Gabriel García márquez</p>
-                    <p>Ref. 001<b> 150€</b></p>
-                    <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                    <a href="#" class="btn btn-success">+ Ajouter au panier</a>
-                </div>
-            </div>
+  			<?php 
+              $sql="SELECT * FROM books as b, images as i WHERE b.image_id=i.image_id AND (b.book_id=1 OR b.book_id=2 OR b.book_id=3) ";
+              $result= mysqli_query($conn,$sql);
+              while($show=mysqli_fetch_array($result)){
+            ?>
             <div class="product-div">
                 <div class="product-image">
-                    <img src='./images/the_alchemist_.png' alt='The Alchemist' />
+                    <?php echo "<img src='{$show["image_dir"]}' alt='Cien anos soledad' >" ?>
                 </div>
                 <div class="product-details">
-                    <h5>The Alchemist</h5>
-                    <p>Paulo Cohelo</p>
-                    <p>Ref. 002<b> 15€</b></p>
+                    <h5><?php echo  $show['book_name']?></h5>
+                    <p><?php echo  $show['autor']?></p>
+                    <p><?php echo  $show['pub_date']?></p>
+                    <p>Ref. 00<?php echo  $show['book_id']?> <b> <?php echo  $show['price']?> &euro;</b></p>
                     <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
                     <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                 </div>
             </div>
-            <div class="product-div">
-                <div class="product-image">
-                    <img src='./images/le_parfum.png' alt='Le Parfum' />
-                </div>
-                <div class="product-details">
-                    <h5>Le Parfum</h5>
-                    <p>Patrick Süskind</p>
-                    <p>Ref. 003<b> 15€</b></p>
-                    <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                    <a href="#" class="btn btn-success">+ Ajouter au panier</a>
-                </div>
-            </div>
+            <?php 
+              }
+            ?>
   		</div>
   		<div class="nos-livres-lien">
   				<a href="./Livres.php">Découvrir plus</a>
