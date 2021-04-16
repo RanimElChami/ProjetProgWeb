@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" target="_blank" href="#">Page d'accueil</a>
+                <a class="nav-link" target="_blank" href="./Home.php">Page d'accueil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" target="_blank" href="#">Produits</a>
