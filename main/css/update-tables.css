@@ -1,0 +1,67 @@
+.box {
+    width: 1270px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-bordered {
+    border: 1px solid #ddd !important;
+    margin-top: 15px;
+}
+
+.box .btn-dark:hover,
+.box .btn-dark:focus {
+    color: #fff;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.navbar {
+    min-height: 0;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+}
+
+.navbar:before {
+    display: none;
+}
+
+.navbar-brand {
+    float: left;
+    height: auto;
+    padding: .3125rem 0;
+    font-size: 18px;
+    line-height: inherit;
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: flex !important;
+    }
+}
+
+.update,
+.delete {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: auto;
+}
+
+.cbg-header-image {
+    width: 100px;
+}
+
+.btn:focus {
+    color: #fff;
+}

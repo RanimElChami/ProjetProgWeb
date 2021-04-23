@@ -8,16 +8,22 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" target="_parent" href="./Home.php">Page d'accueil</a>
+                <a class="nav-link" target="_blank" href="./Home.php">Page d'accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_parent" href="./Produits.php">Produits</a>
+                <a class="nav-link" target="_blank" href="./Produits.php">Produits</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_parent" href="./Livres.php">Livres</a>
+                <a class="nav-link" target="_blank" href="./Livres.php">Livres</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" target="_parent" href="./Achat.php">Achat</a>
+                <a class="nav-link" target="_blank" href="./Achat.php">Achat</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="./UpdateProduits.php">Update Produits</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="./UpdateLivres.php">Update Livres</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>

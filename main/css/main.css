@@ -101,11 +101,12 @@ form {
     width: 100%;
 }
 
-input,
+
+/* input,
 select {
     width: 100%;
     float: left;
-}
+} */
 
 label {
     float: left;
@@ -190,8 +191,6 @@ label {
 
 /* About us */
 
-
-
 .about-us-titre {
     text-align: center;
     text-decoration: underline;
@@ -222,8 +221,6 @@ label {
 
 
 /* Nos livres et produits */
-
-
 
 .nos-livres-prod {
     height: 500px;
@@ -257,4 +254,35 @@ label {
     color: #FFFF;
     position: initial;
     height: auto;
+}
+
+
+/* Banner */
+
+.banner {
+    float: left;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(90deg, #D0D0D0, #343a40);
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 150px 0;
+}
+
+svg {
+    bottom: 0;
+    height: 80px;
+    z-index: 1;
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
+.banner h2 {
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
 }

@@ -52,3 +52,14 @@
     width: 100%;
     padding: 40px 0;
 }
+
+.left-aligned-details {
+    float: left;
+    width: auto;
+    margin-right: 5px;
+}
+
+.right-aligned-details {
+    float: right;
+    width: auto;
+}
