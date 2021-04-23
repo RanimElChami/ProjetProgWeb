@@ -3,7 +3,11 @@
 <head>
     <title>Recherche</title>
     <?php include('layout/Header.php')?>
-    <?php include ('../APIs/include/dbConnection.php'); ?>
+    <?php include ('../APIs/include/dbConnection.php'); 
+    	  session_start();
+    	  $_SESSION['commande']=array();
+    ?>
+
     <link rel="stylesheet" href="css/recherche.css"/>
 </head>
 
@@ -42,34 +46,36 @@
 				</div>
 		</div>
 	</section>
-	<section class='form-order'>
-		<div class=content>
-
-		<form method="GET">
-			<div>
+	<section class='recherche'>
+		<form method="get" >
 				<input type="search" name="q" placeholder="Recherche..." />
 				<input type="submit" value="Valider" />
+			</form>
+	</section>
+		<section class='form-order'>
+		<div class="container">
+			<form method="post" class='commandes'>
+		
 				<?php
 			$articles = $conn->query('SELECT book_name FROM books');
-			if(isset($_GET['q']) AND !empty($_GET['q'])) {
+			if(isset($_GET['q']) AND !empty($_GET['q'])) {            
 				 $q = htmlspecialchars($_GET['q']);
 				 $articles = $conn->query('SELECT book_name FROM books WHERE book_name LIKE "%'.$q.'%"');
-
 			}?>
-
-			<select>
-				<option></option>
-				<?php
+			<select name='search'>
+				<option>Résultat de votre recherche</option>
+				<?php 
 				while($show=mysqli_fetch_array($articles)){
 						echo "<option>".$show['book_name']."</option><br/>";
 				}
+
 				?>
 			</select>
-			</div>
-			<div>
-				<select>
+				
+				
+				<select name='livre' id='livre'>
 					<option>Selectionner un livre</option>
-					<?php
+					<?php 
 						$sql="SELECT book_name FROM books";
 						$result= mysqli_query($conn,$sql);
 						while($show=mysqli_fetch_array($result)){
@@ -77,46 +83,83 @@
 						}
 					?>
 				</select>
-
-			</div>
-			<div>
-				<select>
+			
+				<select name='prod'>
 					<option>Selectionner un produit</option>
-					<!--<?php
+					<?php 
 						$sql2="SELECT product_name FROM products";
 						$result2= mysqli_query($conn,$sql2);
 						while($show2=mysqli_fetch_array($result2)){
 							echo "<option>".$show['product_name']."</option><br/>";
 						}
-					?>-->
-
+					
+					?>
+					
 				</select>
-			</div>
-			<div>
-
-				<button type="submit" class="btn btn-success">Valider</button>
-			</div>
+				<input type="submit" name='submit' class="btn btn-success" />
+			
 
 		</form>
-
+		
 	</div>
 	</section>
 	<section class='prod-sel'>
+		<?php 
+			
+			if (isset($_POST['submit'])){
+				if($_POST['search']!='Résultat de votre recherche'){
+					array_push($_SESSION['commande'], $_POST['search']);
+					if($_POST['livre']!='Selectionner un livre'){
+						array_push($_SESSION['commande'], $_POST['livre']);
+						echo $_SESSION['commande'];
+					};
+					if($_POST['prod']!='Selectionner un produit'){
+						array_push($_SESSION['commande'], $_POST['prod']);
+						echo $_SESSION['commande'];
+					}
+				}
+				else{
+					if($_POST['livre']!='Selectionner un livre'){
+						array_push($_SESSION['commande'], $_POST['livre']);
+						echo $_SESSION['commande'];
+					};
+					if($_POST['prod']!='Selectionner un produit'){
+						array_push($_SESSION['commande'], $_POST['prod']);
+						echo $_SESSION['commande'];
+					}
+				}
+			}
+			;
+					?>
 		<div class='container'>
 			<div class='infos-titre'>
-				<h4>Votre commande</h4>
+				<h4>Votre Commande</h4>
 			</div>
 				<div class='prod-sel-content'>
 					<div><span><i>Nom du produit</i></span>
-						<span>Ramos</span>
+						<span><?php foreach ($_SESSION['commande'] as $select) { 
+										echo $select."<br/>";
+									}?>
+							</span>
 					</div>
 					<div><span><i>Prix</i></span>
-						<span>Juan</span>
+						<span><?php print_r($_SESSION['commande']);
+									foreach ($_SESSION['commande'] as $select) {
+									$result3=$conn->prepare('SELECT price FROM books WHERE books.book_name=? ');
+									$result3-> bind_param("s",$select);
+									$result3->execute();
+									$result3=$result3->get_result();
+									while($show3=mysqli_fetch_array($result3)){
+										echo $show3['price']."<br/>";
+									}
+								}
+						?>
+						</span>
 					</div>
 					<div><span><i>Quantité</i></span>
-						<span>juansebastian60@yahoo.es</span>
+						<span>0</span>
 					</div>
-
+					
 					</div>
 				</div>
 		</div>
