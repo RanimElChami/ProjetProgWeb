@@ -1,4 +1,4 @@
-<?php include('../APIs/GetAllCategories.php')?>
+<?php include('../APIs/GetAllCategories.php'); session_start(); ?>
 <!DOCTYPE html>
     <head>
         <title>Update Produits</title>
@@ -37,10 +37,10 @@
                             <th data-column-id="product_name">Nom Produit</th>
                             <th data-column-id="category_name">Catégorie</th>
                             <th data-column-id="description">Description</th>
-                            <th data-column-id="quant_available">Dispo</th>
+                            <th data-column-id="quant_available">Disponibilité</th>
                             <th data-column-id="price">Prix</th>
                             <th data-column-id="image" data-formatter="image" data-sortable="false" data-header-css-class="cbg-header-image">Image</th>
-                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Actions</th>
                         </tr>
                         </thead>
                     </table>
@@ -51,6 +51,61 @@
         <?php include('layout/Footer.php'); ?>
 
         <?php include('layout/BodyLinks.php'); ?>
+
+
+        <div id="productModal" class="modal fade">
+            <div class="modal-dialog">
+                <form method="post" id="product_form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Ajouter un nouveau produit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Nom du produit</label>
+                        <input type="text" name="product_name" id="product_name" class="form-control" />
+                        <br />
+
+                        <label>Quantité Disponible</label>
+                        <input type="number" name="quant_available" id="quant_available" class="form-control" />
+                        <br />
+
+                        <label>Description</label>
+                        <input type="text" name="description" id="description" class="form-control" />
+                        <br />
+
+                        <label>Prix du produit</label>
+                        <input type="number" step="any" name="price" id="price" class="form-control" />
+                        <br/>
+
+                        <label>Choisir une catégorie</label>
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">Choisir une catégorie</option>
+                            <?php echo $output; ?>
+                        </select>
+                        <br />
+
+                        <label>Image du produit</label>
+                        <select id="image_id" class="form-control" required name="image_id">
+                            <option>Image</option>
+                                <?php
+                                    $query = "SELECT * FROM images";
+                                    $result = mysqli_query($conn, $query);
+
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo '<option value="'.$row["image_id"].'"'.'>'.$row["image"].'</option>';
+                                    }
+                                ?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="product_id" id="product_id" />
+                        <input type="hidden" name="operation" id="operation" />
+                        <input type="submit" name="action" id="action" class="btn btn-success" value="Add" />
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <script type="text/javascript" language="javascript" >
             $(document).ready(function(){
@@ -72,11 +127,11 @@
                     url: "../APIs/UpdateProduitsAPIs/fetch.php",
                     formatters: {
                         "commands": function(column, row) {
-                            return "<button type='button' class='btn btn-warning btn-xs update' data-row-id='"+row.product_id+"'>Update</button>" +
-                            "<button type='button' class='btn btn-danger btn-xs delete' data-row-id='"+row.product_id+"'>Delete</button>";
+                            return "<button type='button' class='btn btn-warning btn-xs update' data-row-id='"+row.product_id+"'>Modifier</button>" +
+                            "<button type='button' class='btn btn-danger btn-xs delete' data-row-id='"+row.product_id+"'>Supprimer</button>";
                         },
                         "image": function(column, row) {
-                            return "<image style='width:50%; height: auto; margin-left:auto; margin-right: auto; display:block;' src='./images/"+ row.image +"'>";
+                            return "<image style='width:150px; height: auto; margin-left:auto; margin-right: auto; display:block;' src='./images/"+ row.image +"'>";
                         }
                     }
                 });
@@ -91,7 +146,7 @@
                     var image_id = $('#image_id').val();
 
                     var form_data = $(this).serialize();
-                    if(category_id != '' && product_name != '' && price != '' && quant_available != '' && description != '' && image_id != '') {
+                    if(category_id != '' && product_name != '' && price != '' && quant_available != '' && description != '' && image_id != '' && quant_available>0) {
                         $.ajax({
                             url:"../APIs/UpdateProduitsAPIs/insert.php",
                             method:"POST",
@@ -154,59 +209,5 @@
                 });
             });
         </script>
-
-        <div id="productModal" class="modal fade">
-            <div class="modal-dialog">
-                <form method="post" id="product_form">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ajouter un nouveau produit</h4>
-                </div>
-                <div class="modal-body">
-                    <label>Nom du produit</label>
-                    <input type="text" name="product_name" id="product_name" class="form-control" />
-                    <br />
-
-                    <label>Quantité Disponible</label>
-                    <input type="number" name="quant_available" id="quant_available" class="form-control" />
-                    <br />
-
-                    <label>Description</label>
-                    <input type="text" name="description" id="description" class="form-control" />
-                    <br />
-
-                    <label>Prix du produit</label>
-                    <input type="number" step="any" name="price" id="price" class="form-control" />
-                    <br/>
-
-                    <label>Choisir une catégorie</label>
-                    <select name="category_id" id="category_id" class="form-control">
-                        <option value="">Choisir une catégorie</option>
-                        <?php echo $output; ?>
-                    </select>
-                    <br />
-
-                    <label>Image du produit</label>
-                    <select id="image_id" class="form-control" required name="image_id">
-                        <option>Image</option>
-                            <?php
-                                $query = "SELECT * FROM images";
-                                $result = mysqli_query($conn, $query);
-
-                                while($row = mysqli_fetch_array($result)){
-                                    echo '<option value="'.$row["image_id"].'"'.'>'.$row["image"].'</option>';
-                                }
-                            ?>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="product_id" id="product_id" />
-                    <input type="hidden" name="operation" id="operation" />
-                    <input type="submit" name="action" id="action" class="btn btn-success" value="Add" />
-                </div>
-                </form>
-            </div>
-        </div>
     </body>
 </html>

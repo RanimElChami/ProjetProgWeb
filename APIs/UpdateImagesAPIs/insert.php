@@ -1,5 +1,5 @@
 <?php
-    include('include/dbConnection.php');
+    include('../include/dbConnection.php');
 
     // If upload button is clicked
     if (isset($_POST['upload'])) {
@@ -7,7 +7,7 @@
         $image = $_FILES['image']['name'];
 
         // Image file directory
-        $target = "./images/".basename($image);
+        $target = "../../main/images/".basename($image);
 
         $stmt = $conn -> prepare('INSERT INTO images (image) VALUES (?)');
         $stmt -> bind_param('s', $image);
@@ -15,5 +15,6 @@
         $stmt -> close();
 
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        echo "Image Ajoutée";
     }
 ?>

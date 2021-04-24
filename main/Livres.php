@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 
 <head>
@@ -32,11 +33,11 @@
             ?>
             <div class="product-div">
                 <div class="product-image">
-                    <?php echo "<img src='./images/{$show["image_dir"]}' alt='Cien anos soledad' >" ?>
+                    <img src='./images/<?php echo $show["image"]?>' alt='<?php echo $show["image"]?>' />
                 </div>
                 <div class="product-details">
                     <h5><?php echo  $show['book_name']?></h5>
-                    <p><?php echo  $show['autor']?></p>
+                    <p><?php echo  $show['author']?></p>
                     <p><?php echo  $show['pub_date']?></p>
                     <p>Ref. 00<?php echo  $show['book_id']?> <b> <?php echo  $show['price']?> &euro;</b></p>
                     <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>

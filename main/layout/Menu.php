@@ -19,19 +19,20 @@
             <li class="nav-item">
                 <a class="nav-link" target="_blank" href="./Achat.php">Achat</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" target="_blank" href="./UpdateProduits.php">Update Produits</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" target="_blank" href="./UpdateLivres.php">Update Livres</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Connexion</a>
-                    <a class="dropdown-item" href="#">Créer un compte</a>
-                </div>
-            </li>
+            <?php
+                if(isset($_SESSION['user_type_id'])){
+                    if($_SESSION['user_type_id']==1){
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="./UpdateProduits.php">Update Produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="./UpdateLivres.php">Update Livres</a>
+                </li>
+            <?php
+                    }
+                }
+            ?>
         </ul>
     </div>
 </nav>

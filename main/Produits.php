@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 
 <head>
@@ -27,15 +28,13 @@
             <?php foreach ($productsArray as $product){?>
                 <div class="product-div">
                     <div class="product-image">
-                        <img src='./images/<?php echo $product["image"]?>' alt="Product Image" />
+                        <img src='./images/<?php echo $product["image"]?>' alt='<?php echo $product["image"]?>' />
                     </div>
                     <div class="product-details">
                         <h5><?php echo $product["product_name"]?></h5>
                         <p class="left-aligned-details">Ref. <?php echo $product["product_id"]?></p>
                         <p class="left-aligned-details"><b> <?php echo $product["price"]?>€</b></p>
                         <p class="right-aligned-details">Quantité Disponible <b><?php echo $product["quant_available"]?></b></p>
-                        <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                        <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                     </div>
                 </div>
             <?php }?>

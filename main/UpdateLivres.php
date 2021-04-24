@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
     <head>
         <title>Update Livres</title>
@@ -7,6 +8,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.js"></script>
         <link rel="stylesheet" href="css/update-tables.css"/>
+        <style>
+            .dropdown-menu {
+                min-width: 200px;
+            }
+        </style>
     </head>
 
     <body>
@@ -31,16 +37,16 @@
                 <div class="table-responsive">
                     <table id="product_data" class="table table-bordered table-striped">
                         <thead>
-                        <tr>
-                            <th data-column-id="book_id" data-type="numeric">ID</th>
-                            <th data-column-id="book_name">Nom Livre</th>
-                            <th data-column-id="author">Auteur</th>
-                            <th data-column-id="pub_date">Date de publication</th>
-                            <th data-column-id="quant_available">Dispo</th>
-                            <th data-column-id="price">Prix</th>
-                            <th data-column-id="image" data-formatter="image" data-sortable="false" data-header-css-class="cbg-header-image">Image</th>
-                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
-                        </tr>
+                            <tr>
+                                <th data-column-id="book_id" data-type="numeric">ID</th>
+                                <th data-column-id="book_name">Nom Livre</th>
+                                <th data-column-id="author">Auteur</th>
+                                <th data-column-id="pub_date">Date de publication</th>
+                                <th data-column-id="quant_available">Disponibilité</th>
+                                <th data-column-id="price">Prix</th>
+                                <th data-column-id="image" data-formatter="image" data-sortable="false" data-header-css-class="cbg-header-image">Image</th>
+                                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                            </tr>
                         </thead>
                     </table>
                 </div>
@@ -71,11 +77,11 @@
                     url: "../APIs/UpdateLivresAPIs/fetch.php",
                     formatters: {
                         "commands": function(column, row) {
-                            return "<button type='button' class='btn btn-warning btn-xs update' data-row-id='"+row.book_id+"'>Update</button>" +
-                            "<button type='button' class='btn btn-danger btn-xs delete' data-row-id='"+row.book_id+"'>Delete</button>";
+                            return "<button type='button' class='btn btn-warning btn-xs update' data-row-id='"+row.book_id+"'>Modifier</button>" +
+                            "<button type='button' class='btn btn-danger btn-xs delete' data-row-id='"+row.book_id+"'>Supprimer</button>";
                         },
                         "image": function(column, row) {
-                            return "<image style='width:50%; height: auto; margin-left:auto; margin-right: auto; display:block;' src='./images/"+ row.image +"'>";
+                            return "<image style='width:50px; height: auto; margin-left:auto; margin-right: auto; display:block;' src='./images/"+ row.image +"'>";
                         }
                     }
                 });
@@ -90,7 +96,7 @@
                     var image_id = $('#image_id').val();
                     var form_data = $(this).serialize();
 
-                    if(author != '' && book_name != '' && price != '' && quant_available != '' && pub_date != '' && image_id != '') {
+                    if(author != '' && book_name != '' && price != '' && quant_available != '' && pub_date != '' && image_id != '' && quant_available>0) {
                         $.ajax({
                             url:"../APIs/UpdateLivresAPIs/insert.php",
                             method:"POST",
@@ -103,7 +109,7 @@
                             }
                         });
                     } else {
-                        alert("All Fields are Required");
+                        alert("All Fields are Required and numeric fields must be greater than 0");
                     }
                 });
 

@@ -20,18 +20,10 @@
     }
 
     $start_from = ($current_page_number - 1) * $records_per_page;
-    $query .= " SELECT books.*,
-        images.* FROM books
-        INNER JOIN images
-        ON images.image_id = books.image_id ";
+    $query .= " SELECT * FROM images ";
 
     if(!empty($_POST["searchPhrase"])) {
-        $query .= 'WHERE (books.book_id LIKE "%'.$_POST["searchPhrase"].'%" ';
-        $query .= 'OR images.image LIKE "%'.$_POST["searchPhrase"].'%" ';
-        $query .= 'OR books.quant_available LIKE "%'.$_POST["searchPhrase"].'%" ';
-        $query .= 'OR books.author LIKE "%'.$_POST["searchPhrase"].'%" ';
-        $query .= 'OR books.book_name LIKE "%'.$_POST["searchPhrase"].'%" ';
-        $query .= 'OR books.price LIKE "%'.$_POST["searchPhrase"].'%" ) ';
+        $query .= 'WHERE (images.image LIKE "%'.$_POST["searchPhrase"].'%" ) ';
     }
 
     $order_by = '';
@@ -41,7 +33,7 @@
         }
     }
     else {
-        $query .= 'ORDER BY books.book_id ASC ';
+        $query .= 'ORDER BY images.image_id ASC ';
     }
 
     if($order_by != '') {
@@ -57,7 +49,7 @@
         $data[] = $row;
     }
 
-    $query1 = "SELECT * FROM books";
+    $query1 = "SELECT * FROM images";
     $result1 = mysqli_query($conn, $query1);
     $total_records = mysqli_num_rows($result1);
 
