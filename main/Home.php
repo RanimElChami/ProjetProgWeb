@@ -1,10 +1,11 @@
-<?php session_start();?>
 <!DOCTYPE html>
 
 <head>
     <title>Accueil</title>
     <?php include('layout/Header.php')?>
     <?php include ('../APIs/include/dbConnection.php'); ?>
+    <?php include ('../APIs/GetRandomProducts.php'); ?>
+    <?php include ('../APIs/GetRandomBooks.php'); ?>
 	<link rel="stylesheet" href="css/produit.css"/>
 	<link rel="stylesheet" href="css/swiper-bundle.min.css"/>
 </head>
@@ -15,10 +16,10 @@
 	<!-- Swiper -->
   	<div class="swiper-container" >
 	    <div class="swiper-wrapper" style="margin-top: 50px;height: 400px">
-	      <div class="swiper-slide"><img src='./images/backpack1.jpg' alt='Product image' /></div>
-	      <div class="swiper-slide"><img src='./images/backpack2.jpg' alt='Product image' /></div>
-	      <div class="swiper-slide"><img src='./images/backpack3.jpg' alt='Product image' /></div>
-	      <div class="swiper-slide"><img src='./images/sac_dos-fjallraven-438378.jpg' alt='Product image' /></div>
+	      <div class="swiper-slide"><img src='./images/shandco2.jpg' alt='Shakespeare and Company' /></div>
+	      <div class="swiper-slide"><img src='./images/shandco1.jpg' alt='Shakespeare and Company' /></div>
+	      <div class="swiper-slide"><img src='./images/shandco4.jpg' alt='Shakespeare and Company' /></div>
+	      <div class="swiper-slide"><img src='./images/shandco3.jpg' alt='Shakespeare and Company' /></div>
 	    </div>
     	<!-- Add Pagination -->
     	<div class="swiper-pagination"></div>
@@ -47,26 +48,21 @@
             </div>
             <!--Livres  -->
             <div class="nos-livres-prod">
-                <?php
-                $sql="SELECT * FROM books as b, images as i WHERE b.image_id=i.image_id AND (b.book_id=1 OR b.book_id=2 OR b.book_id=3) ";
-                $result= mysqli_query($conn,$sql);
-                while($show=mysqli_fetch_array($result)){
-                ?>
-                <div class="product-div">
+                <?php foreach ($randomBooks as $book) {?>
+                    <div class="product-div">
                     <div class="product-image">
-                        <img src='./images/<?php echo $show["image"]?>' alt='./images/<?php echo $show["image"]?>' />
+                        <img src='./images/<?php echo $book["image"]?>' alt='./images/<?php echo $book["image"]?>' />
                     </div>
                     <div class="product-details">
-                        <h5><?php echo  $show['book_name']?></h5>
-                        <p><?php echo  $show['author']?></p>
-                        <p><?php echo  $show['pub_date']?></p>
-                        <p>Ref. 00<?php echo  $show['book_id']?> <b> <?php echo  $show['price']?> &euro;</b></p>
+                        <h5><?php echo  $book['book_name']?></h5>
+                        <p><?php echo  $book['author']?></p>
+                        <p><?php echo  $book['pub_date']?></p>
+                        <p>Ref. 00<?php echo  $book['book_id']?> <b> <?php echo  $book['price']?> &euro;</b></p>
                         <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
                         <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                     </div>
                 </div>
-                <?php
-                }
+                <?php }
                 ?>
             </div>
             <div class="nos-livres-lien">
@@ -81,40 +77,19 @@
                 <h1>Nos produits</h1>
             </div>
             <div class="nos-livres-prod">
+                <?php foreach ($randomProducts as $prod) { ?>
                 <div class="product-div">
                     <div class="product-image">
-                        <img src="./images/chaise1.jpg" alt="Product Image" />
+                        <img src="./images/<?php echo $prod['image']?>" alt="./images/<?php echo $prod['image']?>" />
                     </div>
                     <div class="product-details">
-                        <h5>BOSS Office Products 25 in. Width Big and Tall Brown Fabric</h5>
-                        <p>Ref. 640<b> 250€</b></p>
+                        <h5><?php echo $prod['product_name'];?></h5>
+                        <p>Ref.00<?php echo $prod['product_id'];?><b> <?php echo $prod['price'];?>€</b></p>
                         <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
                         <a href="#" class="btn btn-success">+ Ajouter au panier</a>
                     </div>
                 </div>
-                <div class="product-div">
-                    <div class="product-image">
-                        <img src="./images/chaise2.jpg" alt="Product Image" />
-                    </div>
-                    <div class="product-details">
-                        <h5>Secretlab OMEGA, Black desk chair, Prime Leather</h5>
-                        <p>Ref. 780<b> 180€</b></p>
-                        <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                        <a href="#" class="btn btn-success">+ Ajouter au panier</a>
-                    </div>
-                </div>
-                <div class="product-div">
-                    <div class="product-image">
-                        <img src="./images/chaise3.jpg" alt="Product Image" />
-                    </div>
-                    <div class="product-details">
-                        <h5>DEER HUNTER Gaming Style Computer Office Desk Chair (Red)</h5>
-                        <p>Ref. 95<b> 300€</b></p>
-                        <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                        <a href="#" class="btn btn-success">+ Ajouter au panier</a>
-                    </div>
-                </div>
-            </div>
+            <?php }?>
             <div class="nos-livres-lien">
                 <a href="./Produits.php">Découvrir plus</a>
             </div>

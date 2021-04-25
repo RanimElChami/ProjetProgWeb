@@ -5,10 +5,34 @@
     <?php include('layout/Header.php')?>
     <?php include ('../APIs/include/dbConnection.php'); 
     	  session_start();
-    	  $_SESSION['commande']=array();
-    ?>
+    	  if(!isset($_SESSION['total'])){
+    	  	$_SESSION['total']=0;
+    	  }
+    	  else{
+    	  	$_SESSION['total']=$_SESSION['total']/2;
+    	  }
+    	  if(!isset($_SESSION['commande'])){
+    	  	$_SESSION['commande']=array();	
+    	  };
+    	  	$_SESSION['prices']=array();
 
+    	   if(isset($_POST['vider'])){
+
+							$_SESSION['commande']=array();
+							$_SESSION['prices']=array();
+							$_SESSION['total']=0;	
+							unset($_POST['vider']);
+			};
+			function location($where){
+				echo '<script>window.location.href="'.$where.'"</script>';
+			}
+			if(isset($_POST['valider'])){
+				unset($_POST['valider']);
+				location("recap.php"); 
+			}
+	 ?>  
     <link rel="stylesheet" href="css/recherche.css"/>
+    <script language="javascript" src="js/recherche.js"></script>
 </head>
 
 <body>
@@ -32,21 +56,23 @@
 			</div>
 				<div class='infos-content'>
 					<div><span><i>Nom</i></span>
-						<span>Ramos</span>
+						<span><?php echo $_SESSION['last_name']; ?></span>
 					</div>
 					<div><span><i>Prénom</i></span>
-						<span>Juan</span>
+						<span><?php echo $_SESSION['first_name']; ?></span>
 					</div>
 					<div><span><i>Adresse Mail</i></span>
-						<span>juansebastian60@yahoo.es</span>
+						<span><?php echo $_SESSION['mail']; ?></span>
 					</div>
 					<div><span><i>Date de naissance</i></span>
-						<span>11/02/1999</span>
+						<span><?php echo $_SESSION['dob']; ?></span>
 					</div>
 				</div>
 		</div>
 	</section>
-	<section class='recherche'>
+	<section class="con">
+		<h4>Faites Votre commande</h4>
+	<section class='recherche' >
 		<form method="get" >
 				<input type="search" name="q" placeholder="Recherche..." />
 				<input type="submit" value="Valider" />
@@ -57,12 +83,12 @@
 			<form method="post" class='commandes'>
 		
 				<?php
-			$articles = $conn->query('SELECT book_name FROM books');
+			$articles = $conn->query('SELECT book_name FROM books UNION SELECT product_name FROM products');
 			if(isset($_GET['q']) AND !empty($_GET['q'])) {            
 				 $q = htmlspecialchars($_GET['q']);
-				 $articles = $conn->query('SELECT book_name FROM books WHERE book_name LIKE "%'.$q.'%"');
+				 $articles = $conn->query('SELECT book_name FROM books WHERE book_name LIKE "%'.$q.'%" UNION SELECT product_name FROM products WHERE product_name LIKE "%'.$q.'%" ');
 			}?>
-			<select name='search'>
+			<select name='search'  style="width: 35%">
 				<option>Résultat de votre recherche</option>
 				<?php 
 				while($show=mysqli_fetch_array($articles)){
@@ -84,89 +110,92 @@
 					?>
 				</select>
 			
-				<select name='prod'>
+				<select name='prod' style="width: 34.2%">
 					<option>Selectionner un produit</option>
 					<?php 
 						$sql2="SELECT product_name FROM products";
 						$result2= mysqli_query($conn,$sql2);
 						while($show2=mysqli_fetch_array($result2)){
-							echo "<option>".$show['product_name']."</option><br/>";
+							echo "<option>".$show2['product_name']."</option><br/>";
 						}
 					
 					?>
 					
 				</select>
-				<input type="submit" name='submit' class="btn btn-success" />
-			
-
+				<input type="submit" name='submit' class="btn btn-success" onclick="calctotal()" />
 		</form>
 		
 	</div>
 	</section>
+</section>
 	<section class='prod-sel'>
 		<?php 
 			
 			if (isset($_POST['submit'])){
+				$_SESSION['prices']=array();
 				if($_POST['search']!='Résultat de votre recherche'){
-					array_push($_SESSION['commande'], $_POST['search']);
-					if($_POST['livre']!='Selectionner un livre'){
-						array_push($_SESSION['commande'], $_POST['livre']);
-						echo $_SESSION['commande'];
-					};
-					if($_POST['prod']!='Selectionner un produit'){
-						array_push($_SESSION['commande'], $_POST['prod']);
-						echo $_SESSION['commande'];
+					if(!in_array($_POST['search'], $_SESSION['commande'])){
+						array_push($_SESSION['commande'], $_POST['search']);
 					}
 				}
-				else{
-					if($_POST['livre']!='Selectionner un livre'){
+				if($_POST['livre']!='Selectionner un livre'){
+					if(!in_array($_POST['livre'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['livre']);
-						echo $_SESSION['commande'];
-					};
-					if($_POST['prod']!='Selectionner un produit'){
-						array_push($_SESSION['commande'], $_POST['prod']);
-						echo $_SESSION['commande'];
 					}
 				}
-			}
-			;
+				if($_POST['prod']!='Selectionner un produit'){
+					if(!in_array($_POST['prod'], $_SESSION['commande'])){
+						array_push($_SESSION['commande'], $_POST['prod']);
+					}
+				};
+			};
 					?>
 		<div class='container'>
 			<div class='infos-titre'>
 				<h4>Votre Commande</h4>
 			</div>
 				<div class='prod-sel-content'>
-					<div><span><i>Nom du produit</i></span>
+					<div><span style='margin-bottom: 25px;'><i>Nom du produit</i></span>
 						<span><?php foreach ($_SESSION['commande'] as $select) { 
 										echo $select."<br/>";
 									}?>
 							</span>
 					</div>
-					<div><span><i>Prix</i></span>
-						<span><?php print_r($_SESSION['commande']);
-									foreach ($_SESSION['commande'] as $select) {
-									$result3=$conn->prepare('SELECT price FROM books WHERE books.book_name=? ');
-									$result3-> bind_param("s",$select);
-									$result3->execute();
-									$result3=$result3->get_result();
+					<div><span style='margin-bottom: 25px;'><i>Prix</i></span>
+						<span><?php foreach ($_SESSION['commande'] as $select) {
+									$sql3='SELECT books.price FROM books WHERE books.book_name="'.$select.'" UNION SELECT products.price FROM products WHERE products.product_name="'.$select.'" ';
+									$result3=mysqli_query($conn, $sql3);
 									while($show3=mysqli_fetch_array($result3)){
 										echo $show3['price']."<br/>";
+										array_push($_SESSION['prices'],$show3['price']);
 									}
 								}
+								$_SESSION['total']=0;
+								foreach ($_SESSION['prices'] as $prix) {
+									$_SESSION['total']=$_SESSION['total']+$prix;
+								}
+							
+								
+
 						?>
 						</span>
 					</div>
-					<div><span><i>Quantité</i></span>
-						<span>0</span>
+					<div><span style='margin-bottom: 25px;'><i>Quantité</i></span>
+						<?php foreach ($_SESSION['commande'] as $select){ ?><span> 0 </span><?php };  ?>
 					</div>
-					
+					<div><span><i>TOTAL</i></span>
+						 <span ><?php echo $_SESSION['total']; ?></span>
 					</div>
+					</div>
+					<form method="post">
+					<div><input type="submit" name='valider' class="btn btn-success" value="Valider votre panier"></div>
+					<div><input type="submit" name='vider' class="btn btn-success" value="Vider votre panier" style="background-color: red;border-color: red;" ></div>
+				</form>
 				</div>
-		</div>
 	</section>
-
 	<?php include('layout/Footer.php'); ?>
 
     <?php include('layout/BodyLinks.php'); ?>
 </body>
 </html>
+
