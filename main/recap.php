@@ -33,6 +33,7 @@
 					<div><span style='margin-bottom: 25px;'><i>Nom du produit</i></span>
 						<span><?php foreach ($_SESSION['commande'] as $select) { 
 										echo $select."<br/>";
+										echo $_SESSION['user_type_id'];
 									}?>
 							</span>
 					</div>
@@ -109,7 +110,6 @@
 						mysqli_query($conn,$sql8);
 					}
 			}
-			unset($POST['modifier']);
 			session_destroy();
 			location("Home.php");
 		}

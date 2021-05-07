@@ -4,7 +4,7 @@
     <title>Livres</title>
     <?php include('layout/Header.php');?>
     <?php include ('../APIs/include/dbConnection.php'); ?>
-    <link rel="stylesheet" href="css/livres.css"/>
+    <link rel="stylesheet" href="css/produit.css"/>
 </head>
 
 
@@ -36,9 +36,10 @@
                 </div>
                 <div class="product-details">
                     <h5><?php echo  $show['book_name']?></h5>
-                    <p><?php echo  $show['author']?></p>
-                    <p><?php echo  $show['pub_date']?></p>
-                    <p>Ref. 00<?php echo  $show['book_id']?> <b> <?php echo  $show['price']?> &euro;</b></p>
+                        <p class="left-aligned-details-livre"><?php echo  $show['author']?></p>
+                        <p class="right-aligned-details-livre"><?php echo  $show['pub_date']?></p>
+                        <p class="left-aligned-details-livre">Ref. 00<?php echo  $show['book_id']?> </p>
+                        <p class="right-aligned-details-livre"><b><?php echo  $show['price']?> &euro; </b></p>
                 </div>
             </div>
             <?php

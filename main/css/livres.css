@@ -55,13 +55,13 @@
     padding: 40px 0;
 }
 
-.left-aligned-details {
+.left-aligned-details-livre {
     float: left;
-    width: auto;
+    width: 65%;
     margin-right: 5px;
 }
 
-.right-aligned-details {
+.right-aligned-details-livre {
     float: right;
-    width: auto;
-}
+    width: 33%;
+}            

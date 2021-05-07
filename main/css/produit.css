@@ -65,3 +65,13 @@
     float: right;
     width: auto;
 }
+.left-aligned-details-livre {
+    float: left;
+    width: 65%;
+    margin-right: 5px;
+}
+
+.right-aligned-details-livre {
+    float: right;
+    width: 33%;
+}            

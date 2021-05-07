@@ -25,7 +25,7 @@
     	<div class="swiper-pagination"></div>
   	</div>
 
-    <section>
+    <section style='background: linear-gradient(90deg, #D0D0D0, #343a40);background-repeat: no-repeat;'>
         <div class="container">
             <div class="about-us-titre">
                 <h1>About us</h1>
@@ -53,14 +53,14 @@
                     <div class="product-image">
                         <img src='./images/<?php echo $book["image"]?>' alt='./images/<?php echo $book["image"]?>' />
                     </div>
+                    
                     <div class="product-details">
-                        <h5><?php echo  $book['book_name']?></h5>
-                        <p><?php echo  $book['author']?></p>
-                        <p><?php echo  $book['pub_date']?></p>
-                        <p>Ref. 00<?php echo  $book['book_id']?> <b> <?php echo  $book['price']?> &euro;</b></p>
-                        <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                        <a href="#" class="btn btn-success">+ Ajouter au panier</a>
-                    </div>
+                    <h5><?php echo  $book['book_name']?></h5>
+                        <p class="left-aligned-details-livre"><?php echo  $book['author']?></p>
+                        <p class="right-aligned-details-livre"><?php echo  $book['pub_date']?></p>
+                        <p class="left-aligned-details-livre">Ref. 00<?php echo  $book['book_id']?> </p>
+                        <p class="right-aligned-details-livre"><b><?php echo  $book['price']?> &euro; </b></p>
+                </div>
                 </div>
                 <?php }
                 ?>
@@ -85,8 +85,7 @@
                     <div class="product-details">
                         <h5><?php echo $prod['product_name'];?></h5>
                         <p>Ref.00<?php echo $prod['product_id'];?><b> <?php echo $prod['price'];?>€</b></p>
-                        <a href="#" target="_blank" class="btn btn-danger">Plus de Détails</a>
-                        <a href="#" class="btn btn-success">+ Ajouter au panier</a>
+                       
                     </div>
                 </div>
             <?php }?>

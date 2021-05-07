@@ -91,3 +91,9 @@ h4{
 	margin-right:5px;
 	margin-left: 5px;
 }
+.iconoInput {
+color: #e8e8e8;
+font-size: 15px;
+position: absolute;
+left: 25px;
+padding-top: 10px;}

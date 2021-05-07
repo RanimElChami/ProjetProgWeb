@@ -193,14 +193,28 @@ label {
 
 .about-us-titre {
     text-align: center;
-    text-decoration: underline;
+    color:white;
+    float:left;
+    width: 100%;
+    position: relative;
 }
-
+.about-us-titre h1::after {
+    position: absolute;
+    left: 46%;
+    top: 55px;
+    height: 3px;
+    width: 55px;
+    content: "";
+    background-color: #fff;
+    border-radius: 10px;
+}
 .about-us-cont {
     display: grid;
     margin: 25px;
     grid-template-columns: auto auto;
     grid-gap: 50px;
+    float:left;
+    width: 100%;
 }
 
 .about-us-img {
@@ -217,6 +231,7 @@ label {
     width: 100%;
     display: flex;
     align-items: center;
+    color:white;
 }
 
 
@@ -228,9 +243,20 @@ label {
 
 .nos-livres-titre {
     text-align: center;
-    margin-top: 40px;
-    margin-bottom: 60px;
-    text-decoration: underline;
+    margin-bottom: 20px;
+    float:left;
+    width: 100%;
+    position: relative;
+}
+.nos-livres-titre h1::after {
+    position: absolute;
+    left: 46%;
+    top: 55px;
+    height: 3px;
+    width: 55px;
+    content: "";
+    background-color: black;
+    border-radius: 10px;
 }
 
 .nos-livres-img {
@@ -244,6 +270,8 @@ label {
 .nos-livres-lien {
     text-align: center;
     margin-top: 25px;
+    float:left;
+    width: 100%;
 }
 
 .nos-livres-lien a {
@@ -254,6 +282,11 @@ label {
     color: #FFFF;
     position: initial;
     height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+
 }
 
 

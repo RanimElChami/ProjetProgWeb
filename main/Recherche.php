@@ -13,16 +13,20 @@
     	  }
     	  if(!isset($_SESSION['commande'])){
     	  	$_SESSION['commande']=array();	
+
+    	  	$_SESSION['qte']=array();
     	  };
     	  	$_SESSION['prices']=array();
-
+    	 	$i=0; 
     	   if(isset($_POST['vider'])){
 
 							$_SESSION['commande']=array();
 							$_SESSION['prices']=array();
+							$_SESSION['qte']=array();
 							$_SESSION['total']=0;	
 							unset($_POST['vider']);
 			};
+			
 			function location($where){
 				echo '<script>window.location.href="'.$where.'"</script>';
 			}
@@ -32,7 +36,7 @@
 			}
 	 ?>  
     <link rel="stylesheet" href="css/recherche.css"/>
-    <script language="javascript" src="js/recherche.js"></script>
+   
 </head>
 
 <body>
@@ -136,16 +140,19 @@
 				if($_POST['search']!='Résultat de votre recherche'){
 					if(!in_array($_POST['search'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['search']);
+						array_push($_SESSION['qte'], 1);
 					}
 				}
 				if($_POST['livre']!='Selectionner un livre'){
 					if(!in_array($_POST['livre'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['livre']);
+						array_push($_SESSION['qte'], 1);
 					}
 				}
 				if($_POST['prod']!='Selectionner un produit'){
 					if(!in_array($_POST['prod'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['prod']);
+						array_push($_SESSION['qte'], 1);
 					}
 				};
 			};
@@ -163,7 +170,7 @@
 					</div>
 					<div><span style='margin-bottom: 25px;'><i>Prix</i></span>
 						<span><?php foreach ($_SESSION['commande'] as $select) {
-									$sql3='SELECT books.price FROM books WHERE books.book_name="'.$select.'" UNION SELECT products.price FROM products WHERE products.product_name="'.$select.'" ';
+									$sql3='SELECT books.price, books.book_id FROM books WHERE books.book_name="'.$select.'" UNION SELECT products.price, products.product_id FROM products WHERE products.product_name="'.$select.'" ';
 									$result3=mysqli_query($conn, $sql3);
 									while($show3=mysqli_fetch_array($result3)){
 										echo $show3['price']."<br/>";
@@ -171,8 +178,10 @@
 									}
 								}
 								$_SESSION['total']=0;
+								$c=0;
 								foreach ($_SESSION['prices'] as $prix) {
-									$_SESSION['total']=$_SESSION['total']+$prix;
+									$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
+									$c+=1;
 								}
 							
 								
@@ -181,7 +190,14 @@
 						</span>
 					</div>
 					<div><span style='margin-bottom: 25px;'><i>Quantité</i></span>
-						<?php foreach ($_SESSION['commande'] as $select){ ?><span> 0 </span><?php };  ?>
+						<?php  foreach ($_SESSION['qte'] as $quant){ ?>
+							<span style='height:100%'>
+									<button  > <i class="fas fa-chevron-up"></i></button>
+									<?php echo $quant;?>
+									<button><i class="fas fa-chevron-down"></i></button>
+
+							</span>
+						<?php };?>
 					</div>
 					<div><span><i>TOTAL</i></span>
 						 <span ><?php echo $_SESSION['total']; ?></span>
@@ -196,6 +212,7 @@
 	<?php include('layout/Footer.php'); ?>
 
     <?php include('layout/BodyLinks.php'); ?>
+   
 </body>
 </html>
 
