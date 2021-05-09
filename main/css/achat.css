@@ -28,3 +28,17 @@
 .right-action-btns i {
     margin-right: 15px;
 }
+
+@media (max-width: 767px) {
+    .left-action-btns,
+    .right-action-btns {
+        width: 100%;
+    }
+    .left-action-btns {
+        margin-bottom: 15px;
+    }
+    .left-action-btns button,
+    .right-action-btns button {
+        width: 100% !important;
+    }
+}

@@ -1,8 +1,3 @@
-<?php
-    session_start();
-    include('../APIs/include/dbConnection.php');
-?>
-
 <!DOCTYPE html>
 
 <head>
@@ -13,6 +8,10 @@
 
 <body>
     <?php include('layout/Menu.php'); ?>
+    <?php
+        session_start();
+        include('../APIs/include/dbConnection.php');
+    ?>
 
     <div class="banner">
         <h2>Informations Personelles</h2>
@@ -238,6 +237,8 @@
     </section>
 
     <?php include('layout/Footer.php'); ?>
+
+    <script src="./js/jquery.min2.js"></script>
 
     <?php include('layout/BodyLinks.php'); ?>
 

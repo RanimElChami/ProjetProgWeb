@@ -1,10 +1,9 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 
 <head>
     <title>Produits</title>
     <?php include('layout/Header.php')?>
-    <link rel="stylesheet" href="css/produit.css"/>
+    <link rel="stylesheet" href="css/produit-livre.css"/>
 </head>
 
 <body>
@@ -33,7 +32,7 @@
                     <div class="product-details">
                         <h5><?php echo $product["product_name"]?></h5>
                         <p class="left-aligned-details">Ref. <?php echo $product["product_id"]?></p>
-                        <p class="left-aligned-details"><b> <?php echo $product["price"]?>€</b></p>
+                        <p class="left-aligned-details"><b><?php echo $product["price"]?>€</b></p>
                         <p class="right-aligned-details">Quantité Disponible <b><?php echo $product["quant_available"]?></b></p>
                     </div>
                 </div>
@@ -42,6 +41,8 @@
     </section>
 
     <?php include('layout/Footer.php'); ?>
+
+    <script src="./js/jquery.min2.js"></script>
 
     <?php include('layout/BodyLinks.php'); ?>
 </body>

@@ -4,12 +4,12 @@
     <title>Livres</title>
     <?php include('layout/Header.php');?>
     <?php include ('../APIs/include/dbConnection.php'); ?>
-    <link rel="stylesheet" href="css/produit.css"/>
+    <link rel="stylesheet" href="css/produit-livre.css"/>
 </head>
 
 
 <body>
-    <?php  include('layout/Menu.php'); ?>
+    <?php include('layout/Menu.php'); ?>
 
     <div class="banner">
         <h2>Nos Livres</h2>
@@ -22,37 +22,29 @@
         </svg>
     </div>
 
+    <?php include('../APIs/GetAllBooks.php'); ?>
+
     <section class="liste-produits">
         <div class="container">
-            <!-- Livres -->
-            <?php
-                $sql="SELECT * FROM books as b, images as i WHERE b.image_id=i.image_id ";
-                $result= mysqli_query($conn,$sql);
-                while($show=mysqli_fetch_array($result)){
-            ?>
-            <div class="product-div">
-                <div class="product-image">
-                     <img src='./images/<?php echo $show["image"]?>' alt='./images/<?php echo $show["image"]?>' />
+            <?php foreach ($booksArray as $book){?>
+                <div class="product-div">
+                    <div class="product-image">
+                        <img src='./images/<?php echo $book["image"]?>' alt='<?php echo $book["image"]?>' />
+                    </div>
+                    <div class="product-details">
+                        <h5><?php echo $book["book_name"]?></h5>
+                        <p class="left-aligned-details">Ref. <?php echo $book["book_id"]?></p>
+                        <p class="left-aligned-details"><b><?php echo $book["price"]?>€</b></p>
+                        <p class="right-aligned-details">Quantité Disponible <b><?php echo $book["quant_available"]?></b></p>
+                    </div>
                 </div>
-                <div class="product-details">
-                    <h5><?php echo  $show['book_name']?></h5>
-                        <p class="left-aligned-details-livre"><?php echo  $show['author']?></p>
-                        <p class="right-aligned-details-livre"><?php echo  $show['pub_date']?></p>
-                        <p class="left-aligned-details-livre">Ref. 00<?php echo  $show['book_id']?> </p>
-                        <p class="right-aligned-details-livre"><b><?php echo  $show['price']?> &euro; </b></p>
-                </div>
-            </div>
-            <?php
-                }
-            ?>
-
+            <?php }?>
         </div>
-
     </section>
 
-
-
     <?php include('layout/Footer.php'); ?>
+
+    <script src="./js/jquery.min2.js"></script>
 
     <?php include('layout/BodyLinks.php'); ?>
 </body>

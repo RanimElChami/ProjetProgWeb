@@ -1,0 +1,97 @@
+.product-div {
+    position: relative;
+    width: 31%;
+    padding: 10px 15px;
+    margin: 15px 5px;
+    float: left;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.product-div h5 {
+    height: 50px;
+}
+
+.product-image,
+.product-details {
+    float: left;
+    width: 100%;
+}
+
+.product-image {
+    margin-bottom: 15px;
+}
+
+.product-image img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 260px;
+    width: auto;
+}
+
+.product-div .btn {
+    display: block;
+    float: left;
+    width: 49% !important;
+    margin-right: 1%;
+}
+
+.product-details p {
+    font-size: 16px;
+    margin-bottom: 10px !important;
+}
+
+.product-details .btn {
+    float: left;
+    width: 100%;
+}
+
+.similar-products,
+.additional-products {
+    float: left;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.left-aligned-details {
+    float: left;
+    width: auto;
+    margin-right: 5px;
+}
+
+.right-aligned-details {
+    float: right;
+    width: auto;
+}
+
+.left-aligned-details-livre {
+    float: left;
+    width: 65%;
+    margin-right: 5px;
+}
+
+.right-aligned-details-livre {
+    float: right;
+    width: 33%;
+}
+
+@media (max-width: 1024px) {
+    .product-div {
+        width: 48%;
+    }
+    .liste-produits .product-div h5 {
+        height: 70px;
+    }
+}
+
+@media (max-width: 767px) {
+    .product-div {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .liste-produits .product-div h5 {
+        height: 50px;
+    }
+}

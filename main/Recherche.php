@@ -2,97 +2,95 @@
 
 <head>
     <title>Recherche</title>
-    <?php include('layout/Header.php')?>
-    <?php include ('../APIs/include/dbConnection.php'); 
-    	  session_start();
-    	  if(!isset($_SESSION['total'])){
-    	  	$_SESSION['total']=0;
-    	  }
-    	  else{
-    	  	$_SESSION['total']=$_SESSION['total']/2;
-    	  };
-    	  if(!isset($_SESSION['commande'])){
-    	  	$_SESSION['commande']=array();	
+	<link rel="stylesheet" href="css/recherche.css"/>
+    <?php
+		include('layout/Header.php');
+		include ('../APIs/include/dbConnection.php');
+	?>
+    <?php
+    	session_start();
+    	if(!isset($_SESSION['total'])){
+    		$_SESSION['total'] = 0;
+    	}
+    	else{
+    		$_SESSION['total']=$_SESSION['total']/2;
+    	}
+    	if(!isset($_SESSION['commande'])){
+    		$_SESSION['commande'] = array();
+    	  	$_SESSION['qte'] = array();
+    	  	$_SESSION['prices'] = array();
+    	  	$_SESSION['quant_ava'] = array();
+    	}
 
-    	  	$_SESSION['qte']=array();
-    	  	$_SESSION['prices']=array();
-    	  	$_SESSION['quant_ava']=array();
-    	  };
+    	$i=0;
 
-    	  $i=0; 
-    	   if(isset($_POST['vider'])){
+    	if(isset($_POST['vider'])){
+			$_SESSION['commande'] = array();
+    	  	$_SESSION['qte'] = array();
+    	  	$_SESSION['prices'] = array();
+    	  	$_SESSION['quant_ava'] = array();
+			$_SESSION['total'] = 0;
+			unset($_POST['vider']);
+		}
 
-							$_SESSION['commande']=array();
-							$_SESSION['prices']=array();
-							$_SESSION['qte']=array();
-							$_SESSION['quant_ava']=array();
-							$_SESSION['total']=0;	
-							unset($_POST['vider']);
-							
-			};
-			$f=0;
-			
-			foreach($_SESSION['commande'] as $select){
-				
-				if(isset($_POST[$f])){
-				 	unset($_SESSION['commande'][$f]);
-				 	$_SESSION['commande']=array_merge($_SESSION['commande']);
-				 	unset($_SESSION['prices'][$f]);
-				 	$_SESSION['prices']=array_merge($_SESSION['prices']);
-				 	unset($_SESSION['qte'][$f]);
-				 	$_SESSION['qte']=array_merge($_SESSION['qte']);
-				 	unset($_SESSION['quant_ava'][$f]);
-				 	$_SESSION['quant_ava']=array_merge($_SESSION['quant_ava']);
-				 	unset($_POST[$f]);
-				 };
-				$f+=1;
-				}
-			function location($where){
-				echo '<script>window.location.href="'.$where.'"</script>';
+		$f=0;
+
+		foreach($_SESSION['commande'] as $select){
+			if(isset($_POST[$f])){
+				unset($_SESSION['commande'][$f]);
+				$_SESSION['commande']=array_merge($_SESSION['commande']);
+				unset($_SESSION['prices'][$f]);
+				$_SESSION['prices']=array_merge($_SESSION['prices']);
+				unset($_SESSION['qte'][$f]);
+				$_SESSION['qte']=array_merge($_SESSION['qte']);
+				unset($_SESSION['quant_ava'][$f]);
+				$_SESSION['quant_ava']=array_merge($_SESSION['quant_ava']);
+				unset($_POST[$f]);
 			}
-			function alert(){
-				echo "<script type='text/javascript'>alert('Vous avez pas dépassé la quantité disponible de ce produit');</script>";
+			$f+=1;
+		}
+		function location($where){
+			echo '<script>window.location.href="'.$where.'"</script>';
+		}
+		function alert(){
+			echo "<script type='text/javascript'>alert('Vous avez pas dépassé la quantité disponible de ce produit');</script>";
+		}
+		if(isset($_POST['valider'])){
+			if(count($_SESSION['commande'])!=0){
+				unset($_POST['valider']);
+				location("recap.php");
 			}
-			if(isset($_POST['valider'])){
-				if(count($_SESSION['commande'])!=0){
-					unset($_POST['valider']);
-					location("recap.php"); 
-				};
-			};
-    	$g=0; 
+		}
+
+    	$g=0;
+
     	foreach($_SESSION['commande'] as $select){
     	  	if(isset($_POST[$g."quantmas"])){
-    	  			if($_SESSION['quant_ava'][$g]>$_SESSION['qte'][$g]){
-	    	  			unset($_POST[$g.'quantmas']);
-						$_SESSION['qte'][$g]+=1;					
-					}
-					else{ alert();};
-				};
-
-				if(isset($_POST[$g.'quantminus'])){
-					if($_SESSION['qte'][$g]!=1){
-						unset($_POST[$g.'quantminus']);
-						$_SESSION['qte'][$g]-=1;
-						
-						
-					}
-					else{
-						unset($_POST[$g.'quantminus']);
-						unset($_SESSION['commande'][$g]);
-				 		$_SESSION['commande']=array_merge($_SESSION['commande']);
-				 		unset($_SESSION['prices'][$g]);
-				 		$_SESSION['prices']=array_merge($_SESSION['prices']);
-				 		unset($_SESSION['qte'][$g]);
-				 		$_SESSION['qte']=array_merge($_SESSION['qte']);
-    	  				
-				 	$g+=1;
-					};
+    	  		if($_SESSION['quant_ava'][$g]>$_SESSION['qte'][$g]){
+	    	  		unset($_POST[$g.'quantmas']);
+					$_SESSION['qte'][$g]+=1;
 				}
+				else{ alert();};
+			}
+			if(isset($_POST[$g.'quantminus'])){
+				if($_SESSION['qte'][$g]!=1){
+					unset($_POST[$g.'quantminus']);
+					$_SESSION['qte'][$g]-=1;
+				}
+				else{
+					unset($_POST[$g.'quantminus']);
+					unset($_SESSION['commande'][$g]);
+				 	$_SESSION['commande']=array_merge($_SESSION['commande']);
+				 	unset($_SESSION['prices'][$g]);
+				 	$_SESSION['prices']=array_merge($_SESSION['prices']);
+				 	unset($_SESSION['qte'][$g]);
+				 	$_SESSION['qte']=array_merge($_SESSION['qte']);
+				 	$g+=1;
+				}
+			}
 			$g+=1;
-				
-    	  };?> 
-    <link rel="stylesheet" href="css/recherche.css"/>
-   
+    	  }
+	?>
 </head>
 
 <body>
@@ -109,95 +107,149 @@
         </svg>
     </div>
 
-	<section class='infos-pers'>
-		<div class='container'>
-			<div class='infos-titre'>
-				<h4>Vos Informations Personnelles</h4>
-			</div>
-				<div class='infos-content'>
-					<div><span><i>Nom</i></span>
-						<span><?php echo $_SESSION['last_name']; ?></span>
-					</div>
-					<div><span><i>Prénom</i></span>
-						<span><?php echo $_SESSION['first_name']; ?></span>
-					</div>
-					<div><span><i>Adresse Mail</i></span>
-						<span><?php echo $_SESSION['mail']; ?></span>
-					</div>
-					<div><span><i>Date de naissance</i></span>
-						<span><?php echo $_SESSION['dob']; ?></span>
-					</div>
+	<section>
+		<div class="container">
+			<div class="infos-pers">
+				<div class="infos-titre">
+					<h4>Vos Informations Personnelles</h4>
 				</div>
+				<div class="infos-content">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+							<th scope="col">Nom</th>
+							<th scope="col">Prénom</th>
+							<th scope="col">Date de naissance</th>
+							<th scope="col">Adresse Mail</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">
+									<?php
+										if (isset($_SESSION['last_name'])) {
+											echo $_SESSION['last_name'];
+										} else {
+											echo "<p>-</p>";
+										}
+									?>
+								</th>
+								<td>
+									<?php
+										if (isset($_SESSION['first_name'])) {
+											echo $_SESSION['first_name'];
+										} else {
+											echo "<p>-</p>";
+										}
+									?>
+								</td>
+								<td>
+									<?php
+										if (isset($_SESSION['dob'])) {
+											echo $_SESSION['dob'];
+										} else {
+											echo "<p>-</p>";
+										}
+									?>
+								</td>
+								<td>
+									<?php
+										if (isset($_SESSION['mail'])) {
+											echo $_SESSION['mail'];
+										} else {
+											echo "<p>-</p>";
+										}
+									?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</section>
-	<section class="con">
-		<h4>Faites Votre commande</h4>
-	<section class='recherche' >
-		<form method="get" >
-				<input type="search" name="q" placeholder="Recherche..." />
-				<input type="submit" value="Valider" />
-			</form>
-	</section>
-		<section class='form-order'>
-		<div class="container">
-			<form method="post" class='commandes'>
-		
-				<?php
-			$articles = $conn->query('SELECT book_name FROM books UNION SELECT product_name FROM products');
-			if(isset($_GET['q']) AND !empty($_GET['q'])) {            
-				 $q = htmlspecialchars($_GET['q']);
-				 $articles = $conn->query('SELECT book_name FROM books WHERE book_name LIKE "%'.$q.'%" UNION SELECT product_name FROM products WHERE product_name LIKE "%'.$q.'%" ');
-			}?>
-			<select name='search'  style="width: 35%">
-				<option>Résultat de votre recherche</option>
-				<?php 
-				while($show=mysqli_fetch_array($articles)){
-						echo "<option>".$show['book_name']."</option><br/>";
-				}
 
-				?>
-			</select>
-				
-				
-				<select name='livre' id='livre'>
-					<option>Selectionner un livre</option>
-					<?php 
-						$sql="SELECT book_name FROM books";
-						$result= mysqli_query($conn,$sql);
-						while($show=mysqli_fetch_array($result)){
-							echo "<option>".$show['book_name']."</option><br/>";
-						}
-					?>
-				</select>
-			
-				<select name='prod' style="width: 34.2%">
-					<option>Selectionner un produit</option>
-					<?php 
-						$sql2="SELECT product_name FROM products";
-						$result2= mysqli_query($conn,$sql2);
-						while($show2=mysqli_fetch_array($result2)){
-							echo "<option>".$show2['product_name']."</option><br/>";
-						}
-					
-					?>
-					
-				</select>
-				<input type="submit" name='submit' class="btn btn-success" onclick="calctotal()" />
-		</form>
-		
-	</div>
+	<section>
+		<div class="container">
+			<div class="infos-pers">
+				<div class="infos-titre">
+					<h4>Passez Votre commande</h4>
+				</div>
+				<div class="recherche">
+					<form method="GET">
+						<div class="row">
+							<div class="col">
+								<input type="search" class="form-control" name="q" placeholder="Recherche..." />
+							</div>
+							<div class="col">
+								<input type="submit" class="btn btn-dark" value="Valider" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="form-order">
+						<form method="post" class="commandes">
+							<?php
+								$articles = $conn->query('SELECT book_name FROM books UNION SELECT product_name FROM products');
+								if(isset($_GET['q']) && !empty($_GET['q'])) {
+									$q = htmlspecialchars($_GET['q']);
+									$articles = $conn->query('SELECT book_name FROM books WHERE book_name LIKE "%'.$q.'%" UNION SELECT product_name FROM products WHERE product_name LIKE "%'.$q.'%" ');
+								}
+							?>
+							<div class="row">
+								<div class="col">
+									<select name="search" class="custom-select">
+										<option>Résultat de votre recherche</option>
+										<?php
+											while($show=mysqli_fetch_array($articles)){
+												echo "<option>".$show['book_name']."</option><br/>";
+											}
+										?>
+									</select>
+								</div>
+								<div class="col">
+									<select name='livre' class="custom-select" id='livre'>
+										<option>Selectionner un livre</option>
+										<?php
+											$sql="SELECT book_name FROM books";
+											$result= mysqli_query($conn,$sql);
+											while($show=mysqli_fetch_array($result)){
+												echo "<option>".$show['book_name']."</option><br/>";
+											}
+										?>
+									</select>
+								</div>
+								<div class="col">
+									<select name='prod' class="custom-select">
+										<option>Selectionner un produit</option>
+										<?php
+											$sql2="SELECT product_name FROM products";
+											$result2= mysqli_query($conn,$sql2);
+											while($show2=mysqli_fetch_array($result2)){
+												echo "<option>".$show2['product_name']."</option><br/>";
+											}
+										?>
+									</select>
+								</div>
+								<div class="col">
+									<input type="submit" name='submit' class="btn btn-danger" onclick="calctotal()" />
+								</div>
+							</div>
+						</form>
+				</div>
+			</div>
+		</div>
 	</section>
-</section>
-	<section class='prod-sel'>
-		<?php 
-			
+
+	<section>
+		<?php
 			if (isset($_POST['submit'])){
 				$t=0;
 				foreach($_SESSION['commande'] as $select){
 						unset($_GET[$t.'quantmas']);
 			    		unset($_GET[$t.'quantminus']);
 			    		$t+=1;
-				};					
+				}
 				if($_POST['search']!='Résultat de votre recherche'){
 					if(!in_array($_POST['search'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['search']);
@@ -233,72 +285,101 @@
 							array_push($_SESSION['quant_ava'], $show3['quant_available']);
 						}
 					}
-				};
-			};
-					?>
-		<div class='container'>
-			<div class='infos-titre'>
-				<h4>Votre Commande</h4>
-			</div>
-				<div class='prod-sel-content'>
-					<div><span style='margin-bottom: 25px;'><i>Nom du produit</i></span>
-						<?php foreach ($_SESSION['commande'] as $select) { ?>
-						 <span><?php echo $select;?></span>
-						<?php }; ?>
-					</div>
-					<div><span style='margin-bottom: 25px;'><i>Prix</i></span>
-						<?php foreach ($_SESSION['prices'] as $prix) {?>
-							<span><?php echo $prix;?></span>
-						<?php };
-								$_SESSION['total']=0;
-								$c=0;
-								foreach ($_SESSION['prices'] as $prix) {
-									$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
-									$c+=1;
-								}
-							
-								
-
-						?>
-						</span>
-					</div>
-					<div><span style='margin-bottom: 25px;'><i>Quantité</i></span>
-
-						<?php $h=0;foreach ($_SESSION['qte'] as $quant){?>
-							<form method='post'>
-							<span style='height:100%'>
-									<button  name='<?php echo $h."quantmas" ?>' > <i class="fas fa-chevron-up"></i></button>
-									<?php echo $quant;?>
-									<button name='<?php echo $h."quantminus" ?>'><i class="fas fa-chevron-down"></i></button>
-							</span>
-							</form>
-						<?php $h+=1;};?>
-					</div>
-					<div><span style="margin-bottom: 56px;"></span>
-						
-						 <?php $s=0;foreach ($_SESSION['qte'] as $qte) {?>
-						 	<form method='post'>
-						 	<span><button name='<?php echo $s; ?>' ><i class="fas fa-trash"></i></button></span>
-						 	</form>
-						 <?php $s+=1; };?>
-						
-						 
-					</div>
-					<div><span><i>TOTAL</i></span>
-						 <span ><?php echo $_SESSION['total']; ?></span>
-					</div>
-					</div>
-					<form method="post">
-					<div><input type="submit" name='valider' class="btn btn-success" value="Valider votre panier"></div>
-					<div><input type="submit" name='vider' class="btn btn-success" value="Vider votre panier" style="background-color: red;border-color: red;" ></div>
-				</form>
+				}
+			}
+		?>
+		<div class="container">
+			<div class="infos-pers">
+				<div class="infos-titre">
+					<h4>Votre Commande</h4>
 				</div>
+				<div class="prod-sel-content">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nom du produit/livre</th>
+								<th scope="col">Prix</th>
+								<th scope="col">Quantité</th>
+								<th scope="col">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">
+									<?php
+										if (count($_SESSION['commande'])!=0) {
+											foreach ($_SESSION['commande'] as $select) { ?>
+												<span>
+													<?php echo $select;?>
+												</span>
+									<?php
+											}
+										} else {
+											echo "<p>-</p>";
+										}
+									?>
+								</th>
+								<td>
+									<?php
+									if (count($_SESSION['prices'])!=0) {
+										foreach ($_SESSION['prices'] as $prix) {?>
+										<span>
+											<?php echo $prix;?>
+										</span>
+									<?php }
+										$_SESSION['total']=0;
+										$c=0;
+										foreach ($_SESSION['prices'] as $prix) {
+											$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
+											$c+=1;
+										}
+									} else {
+										echo "<p>-</p>";
+									}
+									?>
+								</td>
+								<td>
+									<?php
+										if (count($_SESSION['qte'])!=0) {
+											$s=0;
+											foreach ($_SESSION['qte'] as $qte) {?>
+												<form method='post'>
+													<span>
+														<button name='<?php echo $s; ?>' ><i class="fas fa-trash"></i></button>
+													</span>
+												</form>
+									<?php $s+=1;
+											}
+										}
+										else {
+											echo "<p>-</p>";
+										} ?>
+								</td>
+								<td>
+									<?php echo $_SESSION['total']; ?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<form method="POST">
+						<div class="row">
+							<div class="col">
+								<input type="submit" name="valider" class="btn btn-success" value="Valider votre panier">
+							</div>
+							<div class="col">
+								<input type="submit" name="vider" class="btn btn-danger" value="Vider votre panier" >
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<?php include('layout/Footer.php'); ?>
 
+	<script src="./js/jquery.min2.js"></script>
+
     <?php include('layout/BodyLinks.php'); ?>
-   
 </body>
 </html>
-

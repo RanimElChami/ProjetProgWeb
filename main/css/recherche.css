@@ -1,99 +1,114 @@
-
-*{
-	margin:0;
-	padding:0;
-}
-h4{
-	color:#343a40;
-}
-
-.infos-pers{
-	border: 1.5px solid #343a40;
-	margin:2%;
-	width: 97%;
-}
-.infos-titre{
-	text-align: center;
-}
-.infos-content{
-	width: 100%;
-	display:flex;
-	justify-content: space-between;
-
+.infos-pers {
+    border: 1.5px solid #A0A0A0;
+    border-radius: 5px;
+    width: 100%;
+    float: left;
+    padding: 15px;
 }
 
-.infos-content div{
-	display:grid;
-}
-.form-order{
-	height: 200px;
-}
-.form-order div form{
-	margin-left:5%;
-}
-.form-order div form div{
-	float: left;
-	width: 25%;
-	padding-left: 2%;
-
+.infos-titre {
+    text-align: center;
+    float: left;
+    width: 100%;
+    position: relative;
 }
 
-.prod-sel{
-	border: 1.5px solid #343a40;
-	margin:2%;
-	width: 97%;
-	height: 600px;
-}
-.prod-sel-content{
-	width: 100%;
-	display:flex;
-	justify-content: space-between;
-
+.infos-titre h4 {
+    text-transform: uppercase;
+    color: #343a40;
 }
 
-.prod-sel-content div{
-	display:grid;
+.infos-titre h4::after {
+    position: absolute;
+    left: 47%;
+    top: 45px;
+    height: 3px;
+    width: 55px;
+    content: "";
+    border-radius: 10px;
+    background-color: #343a40;
 }
 
-.recherche{
-	margin-left: 7.8%; 
-	width: 19.4%;
-	margin-top:3%;
+.infos-content {
+    width: 100%;
+    float: left;
+    margin-top: 15px;
 }
-.recherche form input{
-	width: 170%
+
+.infos-content span {
+    float: left;
+    width: 100%;
+    text-align: center;
 }
-.btn{
-	width: 94.3%;
-    margin-top: 3%
+
+.infos-content table {
+    text-align: center;
 }
-.con{
-	border: 1.5px solid #343a40; 
-	margin:2%;
-	width: 97%;
+
+
+/* Créer commande */
+
+.recherche {
+    margin-top: 25px;
+    float: left;
+    width: 100%;
 }
-#quant{
-	display: block
+
+.recherche form input {
+    width: 100%;
+    float: left;
 }
-.mas{
-	margin-left: 10px;
+
+.btn-success,
+.btn-danger {
+    width: 100%;
+    float: left;
+}
+
+.form-order {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.prod-sel-content {
+    width: 100%;
+    float: left;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.prod-sel-content form {
+    margin-top: 20px;
+}
+
+#quant {
+    display: block
+}
+
+.mas {
+    margin-left: 10px;
     border: 1px solid black;
     padding-left: 5px;
     padding-right: 5px;
 }
-.menos{
-	margin-right: 10px;
+
+.menos {
+    margin-right: 10px;
     border: 1px solid black;
     padding-left: 5px;
     padding-right: 5px;
 }
-#quantiacht{
-	margin-right:5px;
-	margin-left: 5px;
+
+#quantiacht {
+    margin-right: 5px;
+    margin-left: 5px;
 }
+
 .iconoInput {
-color: #e8e8e8;
-font-size: 15px;
-position: absolute;
-left: 25px;
-padding-top: 10px;}
+    color: #e8e8e8;
+    font-size: 15px;
+    position: absolute;
+    left: 25px;
+    padding-top: 10px;
+}

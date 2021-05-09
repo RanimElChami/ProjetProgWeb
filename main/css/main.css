@@ -53,7 +53,7 @@ footer {
 
 .footer-img {
     float: left;
-    width: 15%;
+    width: 75px;
 }
 
 .footer-content {
@@ -101,13 +101,6 @@ form {
     width: 100%;
 }
 
-
-/* input,
-select {
-    width: 100%;
-    float: left;
-} */
-
 label {
     float: left;
     width: 100%;
@@ -132,35 +125,23 @@ label {
 
 .swiper-container {
     width: 100%;
-    height: 100%;
+    height: 550px;
+    float: left;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff !important;
 }
 
 .swiper-wrapper {
-    padding-bottom: 50px;
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: transparent;
-    height: 300px;
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+    float: left;
+    width: 100%;
 }
 
 .swiper-slide img {
-    width: 75%;
+    width: 100%;
+    float: left;
 }
 
 .swiper-container-horizontal>.swiper-pagination-bullets,
@@ -170,9 +151,8 @@ label {
 }
 
 .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
+    float: left;
+    width: 100%;
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
@@ -193,27 +173,18 @@ label {
 
 .about-us-titre {
     text-align: center;
-    color:white;
-    float:left;
+    float: left;
     width: 100%;
     position: relative;
+    margin-bottom: 20px;
 }
-.about-us-titre h1::after {
-    position: absolute;
-    left: 46%;
-    top: 55px;
-    height: 3px;
-    width: 55px;
-    content: "";
-    background-color: #fff;
-    border-radius: 10px;
-}
+
 .about-us-cont {
     display: grid;
-    margin: 25px;
+    margin-top: 25px;
     grid-template-columns: auto auto;
     grid-gap: 50px;
-    float:left;
+    float: left;
     width: 100%;
 }
 
@@ -231,7 +202,6 @@ label {
     width: 100%;
     display: flex;
     align-items: center;
-    color:white;
 }
 
 
@@ -241,22 +211,21 @@ label {
     height: 500px;
 }
 
-.nos-livres-titre {
+.nos-livres-titre,
+.nos-produits-titre {
     text-align: center;
     margin-bottom: 20px;
-    float:left;
+    float: left;
     width: 100%;
     position: relative;
 }
-.nos-livres-titre h1::after {
-    position: absolute;
-    left: 46%;
-    top: 55px;
-    height: 3px;
-    width: 55px;
-    content: "";
-    background-color: black;
-    border-radius: 10px;
+
+.nos-livres-titre {
+    color: #fff;
+}
+
+.nos-produits-titre {
+    color: #000;
 }
 
 .nos-livres-img {
@@ -270,15 +239,23 @@ label {
 .nos-livres-lien {
     text-align: center;
     margin-top: 25px;
-    float:left;
+    float: left;
     width: 100%;
+}
+
+.livre-section {
+    background: #343a40;
+}
+
+.livre-section .product-div {
+    background: #fff;
 }
 
 .nos-livres-lien a {
     border: none;
     padding: 8px 32px;
     border-radius: 8px;
-    background: #343a40;
+    background: #dc3545;
     color: #FFFF;
     position: initial;
     height: auto;
@@ -286,7 +263,47 @@ label {
     margin-right: auto;
     display: block;
     width: 100%;
+}
 
+.nos-livres-lien a,
+.nos-livres-lien a:hover {
+    text-decoration: none;
+}
+
+.produits-section .nos-produits-titre h1,
+.livre-section .nos-livres-titre h1,
+.about-us .about-us-titre h1 {
+    text-transform: uppercase;
+}
+
+.produits-section .nos-produits-titre h1::after,
+.livre-section .nos-livres-titre h1::after,
+.about-us .about-us-titre h1::after {
+    position: absolute;
+    left: 47%;
+    top: 60px;
+    height: 3px;
+    width: 55px;
+    content: "";
+    border-radius: 10px;
+}
+
+.produits-section .nos-produits-titre h1::after,
+.about-us .about-us-titre h1::after {
+    background-color: #000;
+}
+
+.livre-section .nos-livres-titre h1::after {
+    background-color: #fff;
+}
+
+.produits-section h1::after {
+    text-align: center;
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+    color: #000 !important;
+    position: relative;
 }
 
 
@@ -318,4 +335,67 @@ svg {
     text-align: center;
     color: #fff;
     text-transform: uppercase;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+    .swiper-slide img {
+        height: 550px;
+    }
+    .swiper-container {
+        height: auto;
+    }
+    .nos-livres-prod .product-div {
+        width: 48%;
+    }
+    .nos-livres-prod .product-div:nth-child(3) {
+        left: 25%;
+    }
+    .footer-content p {
+        line-height: 35px;
+    }
+    .social-media-icons li {
+        margin: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .swiper-slide img {
+        height: 350px;
+    }
+    .swiper-container {
+        height: auto;
+    }
+    .nos-livres-prod .product-div {
+        width: 100%;
+    }
+    .nos-livres-prod .product-div:nth-child(3) {
+        left: 0;
+    }
+    .about-us-cont {
+        display: block;
+    }
+    .about-us-txt {
+        float: left;
+        margin-top: 15px;
+    }
+    .about-us .about-us-titre h1::after {
+        top: 110px;
+    }
+    .produits-section .nos-produits-titre h1::after,
+    .livre-section .nos-livres-titre h1::after,
+    .about-us .about-us-titre h1::after {
+        left: 45%;
+    }
+    footer .col {
+        flex-basis: initial;
+    }
+    .footer-img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        float: none;
+    }
 }
