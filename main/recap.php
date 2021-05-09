@@ -112,8 +112,7 @@
 			session_destroy();
 			location("Home.php");
 		}
-		if(isset($_POST['modifier'])){
-			session_destroy();
+		if(isset($_POST['modifier'])){	
 			location('Recherche.php');
 			unset($_POST['modifier']);
 		}

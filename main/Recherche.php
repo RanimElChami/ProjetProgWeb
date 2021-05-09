@@ -16,6 +16,7 @@
 
     	  	$_SESSION['qte']=array();
     	  	$_SESSION['prices']=array();
+    	  	$_SESSION['quant_ava']=array();
     	  };
 
     	  $i=0; 
@@ -24,6 +25,7 @@
 							$_SESSION['commande']=array();
 							$_SESSION['prices']=array();
 							$_SESSION['qte']=array();
+							$_SESSION['quant_ava']=array();
 							$_SESSION['total']=0;	
 							unset($_POST['vider']);
 							
@@ -39,6 +41,8 @@
 				 	$_SESSION['prices']=array_merge($_SESSION['prices']);
 				 	unset($_SESSION['qte'][$f]);
 				 	$_SESSION['qte']=array_merge($_SESSION['qte']);
+				 	unset($_SESSION['quant_ava'][$f]);
+				 	$_SESSION['quant_ava']=array_merge($_SESSION['quant_ava']);
 				 	unset($_POST[$f]);
 				 };
 				$f+=1;
@@ -46,40 +50,47 @@
 			function location($where){
 				echo '<script>window.location.href="'.$where.'"</script>';
 			}
+			function alert(){
+				echo "<script type='text/javascript'>alert('Vous avez pas dépassé la quantité disponible de ce produit');</script>";
+			}
 			if(isset($_POST['valider'])){
 				if(count($_SESSION['commande'])!=0){
 					unset($_POST['valider']);
 					location("recap.php"); 
 				};
 			};
-			$g=0;
-    	  foreach($_SESSION['commande'] as $select){
-    	  	if(isset($_GET[$g."quantmas"])){
-					$_SESSION['qte'][$g]+=1;
-					unset($_GET[$g.'quantmas']);
+    	$g=0; 
+    	foreach($_SESSION['commande'] as $select){
+    	  	if(isset($_POST[$g."quantmas"])){
+    	  			if($_SESSION['quant_ava'][$g]>$_SESSION['qte'][$g]){
+	    	  			unset($_POST[$g.'quantmas']);
+						$_SESSION['qte'][$g]+=1;					
+					}
+					else{ alert();};
 				};
-				if(isset($_GET[$g.'quantminus'])){
+
+				if(isset($_POST[$g.'quantminus'])){
 					if($_SESSION['qte'][$g]!=1){
+						unset($_POST[$g.'quantminus']);
 						$_SESSION['qte'][$g]-=1;
-						unset($_GET[($g-1).'quantminus']);
+						
+						
 					}
 					else{
+						unset($_POST[$g.'quantminus']);
 						unset($_SESSION['commande'][$g]);
 				 		$_SESSION['commande']=array_merge($_SESSION['commande']);
 				 		unset($_SESSION['prices'][$g]);
 				 		$_SESSION['prices']=array_merge($_SESSION['prices']);
 				 		unset($_SESSION['qte'][$g]);
 				 		$_SESSION['qte']=array_merge($_SESSION['qte']);
-    	  				unset($_GET[$g.'quantminus']);
-				 	
+    	  				
+				 	$g+=1;
 					};
 				}
-    	  	unset($_GET[$g.'quantmas']);
-    	  	unset($_GET[$g.'quantminus']);
-    	  	$g+=1;
-    	  }
-			
-	 ?>  
+			$g+=1;
+				
+    	  };?> 
     <link rel="stylesheet" href="css/recherche.css"/>
    
 </head>
@@ -181,14 +192,21 @@
 		<?php 
 			
 			if (isset($_POST['submit'])){
+				$t=0;
+				foreach($_SESSION['commande'] as $select){
+						unset($_GET[$t.'quantmas']);
+			    		unset($_GET[$t.'quantminus']);
+			    		$t+=1;
+				};					
 				if($_POST['search']!='Résultat de votre recherche'){
 					if(!in_array($_POST['search'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['search']);
 						array_push($_SESSION['qte'], 1);
-						$sql3='SELECT books.price, books.book_id FROM books WHERE books.book_name="'.$_POST['search'].'" UNION SELECT products.price, products.product_id FROM products WHERE products.product_name="'.$_POST['search'].'" ';
+						$sql3='SELECT books.price, books.book_id, books.quant_available FROM books WHERE books.book_name="'.$_POST['search'].'" UNION SELECT products.price, products.product_id, products.quant_available FROM products WHERE products.product_name="'.$_POST['search'].'" ';
 						$result3=mysqli_query($conn, $sql3);
 						while($show3=mysqli_fetch_array($result3)){
 							array_push($_SESSION['prices'],$show3['price']);
+							array_push($_SESSION['quant_ava'], $show3['quant_available']);
 						}
 					}
 				}
@@ -196,10 +214,11 @@
 					if(!in_array($_POST['livre'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['livre']);
 						array_push($_SESSION['qte'], 1);
-						$sql3='SELECT books.price, books.book_id FROM books WHERE books.book_name="'.$_POST['livre'].'" UNION SELECT products.price, products.product_id FROM products WHERE products.product_name="'.$_POST['livre'].'" ';
+						$sql3='SELECT books.price, books.book_id, books.quant_available FROM books WHERE books.book_name="'.$_POST['livre'].'" UNION SELECT products.price, products.product_id, products.quant_available FROM products WHERE products.product_name="'.$_POST['livre'].'" ';
 						$result3=mysqli_query($conn, $sql3);
 						while($show3=mysqli_fetch_array($result3)){
 							array_push($_SESSION['prices'],$show3['price']);
+							array_push($_SESSION['quant_ava'], $show3['quant_available']);
 						}
 					}
 				}
@@ -207,10 +226,11 @@
 					if(!in_array($_POST['prod'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['prod']);
 						array_push($_SESSION['qte'], 1);
-						$sql3='SELECT books.price, books.book_id FROM books WHERE books.book_name="'.$_POST['prod'].'" UNION SELECT products.price, products.product_id FROM products WHERE products.product_name="'.$_POST['prod'].'" ';
+						$sql3='SELECT books.price, books.book_id, books.quant_available FROM books WHERE books.book_name="'.$_POST['prod'].'" UNION SELECT products.price, products.product_id, products.quant_available FROM products WHERE products.product_name="'.$_POST['prod'].'" ';
 						$result3=mysqli_query($conn, $sql3);
 						while($show3=mysqli_fetch_array($result3)){
 							array_push($_SESSION['prices'],$show3['price']);
+							array_push($_SESSION['quant_ava'], $show3['quant_available']);
 						}
 					}
 				};
@@ -245,7 +265,7 @@
 					<div><span style='margin-bottom: 25px;'><i>Quantité</i></span>
 
 						<?php $h=0;foreach ($_SESSION['qte'] as $quant){?>
-							<form method='get'>
+							<form method='post'>
 							<span style='height:100%'>
 									<button  name='<?php echo $h."quantmas" ?>' > <i class="fas fa-chevron-up"></i></button>
 									<?php echo $quant;?>
@@ -274,6 +294,7 @@
 				</form>
 				</div>
 	</section>
+
 	<?php include('layout/Footer.php'); ?>
 
     <?php include('layout/BodyLinks.php'); ?>
