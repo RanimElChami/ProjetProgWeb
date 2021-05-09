@@ -27,6 +27,7 @@
             $_SESSION['mail'] =$row["mail"];
             $_SESSION['pseudo'] = $row["pseudo"];
             $_SESSION['password'] = $row["password"];
+            $_SESSION['ancien']=true;
         }
         // Redirect user to page "Recherche.php"
         header('Location: ../main/Recherche.php');

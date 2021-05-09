@@ -9,8 +9,9 @@
     $total=$_SESSION['total'];
     function location($where){
 		echo '<script>window.location.href="'.$where.'"</script>';
-	}
-    	?>
+		
+	};
+    ?>
     <link rel="stylesheet" href="css/recap.css"/>
 </head>
 
@@ -33,7 +34,6 @@
 					<div><span style='margin-bottom: 25px;'><i>Nom du produit</i></span>
 						<span><?php foreach ($_SESSION['commande'] as $select) { 
 										echo $select."<br/>";
-										echo $_SESSION['user_type_id'];
 									}?>
 							</span>
 					</div>
@@ -49,45 +49,42 @@
 						</span>
 					</div>
 					<div><span style='margin-bottom: 25px;'><i>Quantité</i></span>
-						<?php foreach ($_SESSION['commande'] as $select){ ?><span> 0 </span><?php };  ?>
+						<?php foreach ($_SESSION['qte'] as $quant){ ?><span> <?php echo $quant;?></span><?php };  ?>
 					</div>
 				</div>
 				<div class="s-total">
 					<h4>TOTAL</h4>
-					<p>Total sans remise.....<?php echo $total ?></p>
+					<p>Total sans remise.....<?php echo $total; ?></p>
 					<?php 
-						
-						if(isset($_SESSION['user_type_id'])){
-
-						if($_SESSION['user_type_id']==1){ 
-							$total=($total)-($total*0.15); ?>
-							<p>Total avec remise (-15%).....<?php echo $total ; ?></p>
-						<?php 
-						}}
-						
-						else{
-							if(isset($_SESSION['nb_orders'])){
-							if($_SESSION['nb_orders']>1){
+					if(isset($_SESSION['ancien'])){
+						if($_SESSION['ancien']==true){
+							if($_SESSION['user_type_id']==1){ 
+								$total=($total)-($total*0.15); ?>
+								<p>Total avec remise (-15%).....<?php echo $total ; ?></p>
+					<?php 	}
+							else{
 								$total=($total)-($total*0.1); ?>
 								<p>Total avec remise (-10%).....<?php echo $total ?></p>
-							<?php }}}; ?>
+					<?php }}}; ?>
 				</div>
 				<form class="conf-order" method='post'>
 				<div><input type="submit" name='confirmer' class="btn btn-success" value="Confirmer votre panier"></div>
 				<div><input type="submit" name='modifier' class="btn btn-success" value="Modifier votre panier" style="background-color: red;border-color: red;" ></div>
 			</form>
 			<?php if(isset($_POST['confirmer'])){
-					$_SESSION['total']=$total;
-					$sql4="INSERT INTO user (client_id, first_name, last_name, civility_id, dob, mail, password, pseudo, user_type_id, nb_orders) VALUES (NULL, '".$_SESSION["first_name"]."', '".$_SESSION["last_name"]."', '".$_SESSION["civility_id"]."', '".$_SESSION["dob"]."', '".$_SESSION["mail"]."', '".$_SESSION["password"]."', '".$_SESSION["pseudo"]."', '".$_SESSION["user_type_id"]."', 1) ";
-					mysqli_query($conn,$sql4);
-					$sql='SELECT user_type_id, nb_orders, client_id FROM user WHERE mail="'.$_SESSION['mail'].'"';
-						$result=mysqli_query($conn, $sql);
-						while($show=mysqli_fetch_array($result)){
-								$_SESSION['user_type_id']=$show['user_type_id'];
-								$_SESSION['client_id']=$show['client_id'];
-								$_SESSION['nb_orders']=$show['nb_orders'];	
+						$_SESSION['total']=$total;
+						if (!(isset($_SESSION['ancien']))){
+							$sql4="INSERT INTO user (client_id, first_name, last_name, civility_id, dob, mail, password, pseudo, user_type_id, nb_orders) VALUES (NULL, '".$_SESSION["first_name"]."', '".$_SESSION["last_name"]."', '".$_SESSION["civility_id"]."', '".$_SESSION["dob"]."', '".$_SESSION["mail"]."', '".$_SESSION["password"]."', '".$_SESSION["pseudo"]."', '".$_SESSION["user_type_id"]."', 1) ";
+							mysqli_query($conn,$sql4);
+							$sql='SELECT user_type_id, nb_orders, client_id FROM user WHERE mail="'.$_SESSION['mail'].'"';
+								$result=mysqli_query($conn, $sql);
+								while($show=mysqli_fetch_array($result)){
+										$_SESSION['user_type_id']=$show['user_type_id'];
+										$_SESSION['user_id']=$show['client_id'];
+										$_SESSION['nb_orders']=$show['nb_orders'];	
+								};
 						};
-					$sql5="INSERT INTO orders (order_id, user_id, order_date, total_amount) VALUES (NULL, '".$_SESSION["client_id"]."', '".date("Y-m-d")."', '".$_SESSION["total"]."');";
+					$sql5="INSERT INTO orders (order_id, user_id, order_date, total_amount) VALUES (NULL, '".$_SESSION["user_id"]."', '".date("Y-m-d")."', '".$_SESSION["total"]."');";
 					mysqli_query($conn,$sql5);
 					foreach($_SESSION['commande'] as $select){
 						$sql6="SELECT book_id, prodorbook FROM books WHERE book_name='".$select."' UNION SELECT product_id, prodorbook FROM products WHERE product_name='".$select."' ";
@@ -95,6 +92,7 @@
 						while($show6=mysqli_fetch_array($result6)){
 							$prodorbook=$show6['prodorbook'];
 							$id_prod=$show6['book_id'];
+							$quant_prod=$_SESSION['qte'][array_search($select, $_SESSION['commande'])];
 					};
 					$sql7="SELECT order_id FROM orders WHERE user_id='".$_SESSION["client_id"]."' AND order_date='".date("Y-m-d")."' ";
 					$result7=mysqli_query($conn, $sql7);
@@ -102,19 +100,22 @@
 							$order_id=$show7['order_id'];
 					}
 					if($prodorbook==0){
-						$sql8="INSERT INTO order_book (order_id, book_id, quantity) VALUES ('".$order_id."', $id_prod, 1)";
+						$sql8="INSERT INTO order_book (order_id, book_id, quantity) VALUES ('".$order_id."', $id_prod, $quant_prod )";
 						mysqli_query($conn,$sql8);
 					}
 					if($prodorbook==1){
-						$sql8="INSERT INTO order_product (order_id, product_id, quantity) VALUES ('".$order_id."', $id_prod, 1)";
+						$sql8="INSERT INTO order_product (order_id, product_id, quantity) VALUES ('".$order_id."', $id_prod, $quant_prod )";
 						mysqli_query($conn,$sql8);
 					}
+					
 			}
 			session_destroy();
 			location("Home.php");
 		}
-		if(isset($POST['modifier'])){
+		if(isset($_POST['modifier'])){
+			session_destroy();
 			location('Recherche.php');
+			unset($_POST['modifier']);
 		}
 
 			?>
