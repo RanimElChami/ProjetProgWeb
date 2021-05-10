@@ -30,14 +30,19 @@
                     <a class="nav-link" href="./UpdateLivres.php">Update Livres</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../APIs/Deconnexion.php">Déconnexion</a>
+                    <a class="nav-link" href="./UpdateImages.php">Update Images</a>
                 </li>
             <?php
                     }
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="../APIs/Deconnexion.php">Déconnexion</a>
+                </li>
+            <?php
                 } else {
             ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./Connexion.php">Connexion</a>
+                    <a class="nav-link" href="./Connexion.php">Connexion Administrative</a>
                 </li>
             <?php
                 }

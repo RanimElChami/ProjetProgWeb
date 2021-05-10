@@ -47,6 +47,8 @@
 
     <?php include('layout/Footer.php'); ?>
 
+    <script src="./js/jquery.min2.js"></script>
+
     <?php include('layout/BodyLinks.php'); ?>
 </body>
 

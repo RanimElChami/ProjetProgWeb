@@ -105,38 +105,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="user_type_id">Type Utilisateur</label>
-                            <select id="user_type_id" class="form-control" required name="user_type_id">
-                                <option value="select">Type Utilisateur</option>
-                                    <?php
-                                        $query = "SELECT * FROM user_type";
-                                        $result = mysqli_query($conn, $query);
-
-                                        while($row = mysqli_fetch_array($result)){
-                                            echo '<option value="'.$row["user_type_id"].'"';
-
-                                            if(isset($_SESSION['user_type_id'])){
-                                                if($row['user_type_id'] == $_SESSION['user_type_id']) {
-                                                    echo ' selected';
-                                                }
-                                            }
-                                            echo '>'.$row["user_type_name"].'</option>';
-                                        }
-                                    ?>
-                            </select>
-                            <?php if (isset($_SESSION['validUserType'])){ if(!$_SESSION['validUserType']){ ?>
-                                <div class="invalid-feedback" style="display: block;">Veuillez choisir un type d'utilisateur</div>
-                            <?php } else { ?>
-                                <style type="text/css">
-                                    .invalid-feedback {
-                                        display: none;
-                                    }
-                                </style>
-                            <?php }
-                        } ?>
-                        </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="dob">Date de naissance</label>
                             <input type="date" class="form-control" id="dob" placeholder="Date de naissance" name="dob" required
                             value=<?php if (isset($_SESSION['dob'])) {echo $_SESSION['dob'];}?>>
@@ -151,7 +120,7 @@
                             <?php }
                         } ?>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="mail">Email</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -214,7 +183,7 @@
             </div>
             <div class="ancien-client-form" id="old-user-form" style="display: none;">
                 <h5>Vous etes déjà un client? Accéder à votre compte!</h5>
-                <form class="needs-validation" novalidate action="../APIs/SignIn.php" method="POST">
+                <form class="needs-validation" novalidate action="../APIs/SignInClient.php" method="POST">
                     <div class="form-group">
                         <label for="pseudo">Pseudo</label>
                         <div class="input-group">

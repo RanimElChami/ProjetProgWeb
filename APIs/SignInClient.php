@@ -16,13 +16,13 @@
 
       if ($result->num_rows == 1) {
         while($row = $result->fetch_assoc()) {
-          if ($row["user_type_name"]=='Administrateur'){
+          if ($row["user_type_name"]=='Client'){
             // Start a session
             session_start();
             // Create two session variables and set their value equal to the operator id
             $_SESSION['user_id'] = $row["user_id"];
             $_SESSION['user_type_name'] = $row["user_type_name"];
-            $_SESSION['user_type_id'] = 1;
+            $_SESSION['user_type_id'] = 2;
             $_SESSION['first_name'] = $row["first_name"];
             $_SESSION['last_name'] = $row["last_name"];
             $_SESSION['civility_id'] = $row["civility_id"];
@@ -34,7 +34,7 @@
             $_SESSION['ancien'] = true;
           } else {
             echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
-            <h4>Vous devez être administrateur pour se connecter!</h4>
+            <h4>Vous devez être client pour se connecter de cette page!</h4>
             </div>";
             exit();
           }

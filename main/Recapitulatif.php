@@ -6,6 +6,7 @@
 <head>
     <title>Recapitulatif Commande</title>
 	<link rel="stylesheet" href="css/recherche.css"/>
+	<link rel="stylesheet" href="css/recap.css"/>
     <?php
 		include('layout/Header.php');
 		include ('../APIs/include/dbConnection.php');
@@ -32,6 +33,25 @@
 
 	<section class="recap">
 		<div class="container">
+			<div class="additional-info">
+				<h4>Informations complémentaires</h4>
+				<div class="left-info">
+					<h5>Adresse de la boutique</h5>
+					<p>37 Rue de la Bûcherie, 75005 Paris</p>
+				</div>
+				<div class="right-info">
+					<h5>Horaire d'ouverture</h5>
+					<ul>
+						<li>Lundi à Vendredi, 2.00pm à 6.30pm</li>
+						<li>Samedi et Dimanche, 11.30am à 6.30pm</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="recap">
+		<div class="container">
 			<div class="infos-pers">
 				<div class="prod-sel-content">
 					<table class="table table-striped">
@@ -40,82 +60,68 @@
 								<th scope="col">Nom du produit/livre</th>
 								<th scope="col">Prix</th>
 								<th scope="col">Quantité</th>
-								<th scope="col">Total</th>
 							</tr>
 						</thead>
 						<tbody>
+							<?php
+							$iterator = new MultipleIterator();
+							$iterator->attachIterator(new ArrayIterator($_SESSION['commande']));
+							$iterator->attachIterator(new ArrayIterator($_SESSION['prices']));
+							$iterator->attachIterator(new ArrayIterator($_SESSION["qte"]));
+							$h=0;
+							$s=0;
+							foreach ($iterator as $item){?>
+								<tr>
+									<th scope="row">
+										<span><?php echo $item[0];?></span>
+									</th>
+									<td>
+										<?php echo $item[1];?>
+										<?php
+											$_SESSION['total']=0;
+											$c=0;
+											foreach ($_SESSION['prices'] as $prix) {
+												$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
+												$c+=1;
+											}
+										?>
+									</td>
+									<td>
+										<span><?php echo $item[2];?></span>
+									</td>
+
+								</tr>
+							<?php } ?>
 							<tr>
-								<th scope="row">
-									<?php
-										if (isset($_SESSION['commande'])) {
-											if (count($_SESSION['commande'])!=0) {
-												foreach ($_SESSION['commande'] as $select) { ?>
-													<span><?php echo $select;?></span>
-										<?php
-												}
-											}
-										} else {
-											echo "<p>-</p>";
-										}
-									?>
+								<th>
+									<?php echo "<h5>Total sans remise : ".$_SESSION['total']."€</h5>";?>
 								</th>
-								<td>
+								<th colspan="2">
 									<?php
-									if (isset($_SESSION['commande'])) {
-										if (count($_SESSION['commande'])!=0) {
-											foreach ($_SESSION['commande'] as $select) {
-												$sql3='SELECT books.price FROM books WHERE books.book_name="'.$select.
-												'" UNION SELECT products.price FROM products WHERE products.product_name="'.$select.'" ';
-												$result3=mysqli_query($conn, $sql3);
-												while($show3=mysqli_fetch_array($result3)){
-													echo $show3['price']."<br/>";
-												}
-											}
-										}
-									}  else {
-										echo "<p>-</p>";
-									}
-									?>
-								</td>
-								<td>
-									<?php
-									if (isset($_SESSION['qte'])) {
-										if (count($_SESSION['qte'])!=0) {
-											foreach ($_SESSION['qte'] as $quant){ ?>
-												<span><?php echo $quant;?></span>
-										<?php
-											}
-										}
-									}   else {
-										echo "<p>-</p>";
-									} ?>
-								</td>
-								<td>
-									<p>Total sans remise : <?php echo $total; ?></p>
-									<?php
-									if(isset($_SESSION['ancien'])){
-										if($_SESSION['ancien']){
-											if($_SESSION['user_type_id']==1){
-												$total=($total)-($total*0.15); ?>
-												<p>Total avec remise (-15%) : <?php echo $total; ?></p>
-									<?php 	}
-											else{
-												$total=($total)-($total*0.1); ?>
-												<p>Total avec remise (-10%) : <?php echo $total; ?></p>
-									<?php 	}
-										}
-									} ?>
-								</td>
+										if(isset($_SESSION['ancien'])){
+											if($_SESSION['ancien']){
+												if($_SESSION['user_type_id']==1){
+													$total=($total)-($total*0.15); ?>
+													<h5>Total avec remise (-15%) : <?php echo $total; ?>€</h5>
+										<?php 	}
+												else if($_SESSION['user_type_id']==2){
+													$total=($total)-($total*0.1); ?>
+													<h5>Total avec remise (-10%) : <?php echo $total; ?>€</h5>
+										<?php }}}
+										else {
+											echo "<p>-</p>";
+										} ?>
+								</th>
 							</tr>
-							</tbody>
+						</tbody>
 					</table>
 					<form method="POST">
 						<div class="row">
 							<div class="col">
-								<input type="submit" name="confirmer" class="btn btn-success" value="Confirmer votre panier">
+								<input type="submit" name="modifier" class="btn btn-danger" value="Modifier votre panier">
 							</div>
 							<div class="col">
-								<input type="submit" name="modifier" class="btn btn-danger" value="Modifier votre panier">
+								<input type="submit" name="confirmer" class="btn btn-success" value="Confirmer votre panier">
 							</div>
 						</div>
 					</form>
@@ -123,6 +129,61 @@
 			</div>
 		</div>
 	</section>
+
+	<?php
+		if(isset($_POST['confirmer'])){
+			$_SESSION['total']=$total;
+			if (!(isset($_SESSION['ancien']))){
+				$sql4="INSERT INTO user (first_name, last_name, civility_id, dob, mail, password, pseudo)
+				VALUES ('".$_SESSION["first_name"]."', '".$_SESSION["last_name"]."', '".$_SESSION["civility_id"]."', '".
+				$_SESSION["dob"]."', '".$_SESSION["mail"]."', '".$_SESSION["password"]."', '".$_SESSION["pseudo"]."') ";
+				mysqli_query($conn,$sql4);
+				$sql='SELECT user_type_id, nb_orders, user_id FROM user WHERE mail="'.$_SESSION['mail'].'"';
+				$result=mysqli_query($conn, $sql);
+				while($show=mysqli_fetch_array($result)){
+					$_SESSION['user_type_id']=$show['user_type_id'];
+					$_SESSION['user_id']=$show['user_id'];
+					$_SESSION['nb_orders']=$show['nb_orders'];
+				}
+			}
+			$sql5="INSERT INTO orders (user_id, order_date, total_amount) VALUES
+			('".$_SESSION["user_id"]."', '".date("Y-m-d")."', '".$_SESSION["total"]."');";
+			mysqli_query($conn,$sql5);
+			foreach($_SESSION['commande'] as $select){
+				$sql6="SELECT book_id, prodorbook FROM books WHERE book_name='".$select."' UNION SELECT product_id, prodorbook FROM products WHERE product_name='".$select."' ";
+				$result6=mysqli_query($conn, $sql6);
+				while($show6=mysqli_fetch_array($result6)){
+					$prodorbook=$show6['prodorbook'];
+					$id_prod=$show6['book_id'];
+					$quant_prod=$_SESSION['qte'][array_search($select, $_SESSION['commande'])];
+				}
+				$sql7="SELECT order_id FROM orders WHERE user_id='".$_SESSION["user_id"]."' AND order_date='".date("Y-m-d")."' ";
+				$result7=mysqli_query($conn, $sql7);
+				while($show7=mysqli_fetch_array($result7)){
+					$order_id=$show7['order_id'];
+				}
+				if($prodorbook==0){
+					$sql8="INSERT INTO order_book (order_id, book_id, quantity) VALUES ('".$order_id."', $id_prod, $quant_prod )";
+					mysqli_query($conn,$sql8);
+				}
+				if($prodorbook==1){
+					$sql8="INSERT INTO order_product (order_id, product_id, quantity) VALUES ('".$order_id."', $id_prod, $quant_prod )";
+					mysqli_query($conn,$sql8);
+				}
+			}
+			$_SESSION['commande'] = array();
+    	  	$_SESSION['qte'] = array();
+    	  	$_SESSION['prices'] = array();
+    	  	$_SESSION['quant_ava'] = array();
+			$_SESSION['total'] = 0;
+			location("Home.php");
+		}
+		if(isset($_POST['modifier'])){
+			location('Recherche.php');
+			unset($_POST['modifier']);
+		}
+	?>
+
   	<?php include('layout/Footer.php'); ?>
 
 	<script src="./js/jquery.min2.js"></script>

@@ -6,7 +6,6 @@
     $_SESSION['validFN'] = false;
     $_SESSION['validLN'] = false;
     $_SESSION['validAge'] = false;
-    $_SESSION['validUserType'] = false;
     $_SESSION['validCivility'] = false;
     $_SESSION['validMail'] = false;
     $_SESSION['validUserName'] = false;
@@ -27,10 +26,10 @@
 
     // Check if received values are not null nor empty
     if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['civility_id'])
-    && isset($_POST['user_type_id']) && isset($_POST['dob']) && isset($_POST['mail'])
+    && isset($_POST['dob']) && isset($_POST['mail'])
     && isset($_POST['pseudo']) && isset($_POST['password'])){
         if($_POST['first_name'] != '' && $_POST['last_name'] != '' && $_POST['civility_id'] != ''
-         && $_POST['user_type_id'] != '' && $_POST['dob'] != '' && $_POST['mail'] != ''
+        && $_POST['dob'] != '' && $_POST['mail'] != ''
          && $_POST['pseudo'] != '' && $_POST['password'] != ''){
             // Check if the email contains the character "@"
             if(strpos($_POST['mail'], '@')){
@@ -63,11 +62,6 @@
             } else {
                 $_SESSION['validCivility'] = true;
             }
-            if($_POST['user_type_id'] == 'select'){
-                $_SESSION['validUserType'] = false;
-            } else {
-                $_SESSION['validUserType'] = true;
-            }
             // Check if username is longer than 6 characters
             if(strlen($_POST['pseudo'])>=6){
                 $_SESSION['validUserName'] = true;
@@ -84,7 +78,6 @@
             $_SESSION['first_name'] = $_POST["first_name"];
             $_SESSION['last_name'] = $_POST["last_name"];
             $_SESSION['civility_id'] = $_POST["civility_id"];
-            $_SESSION['user_type_id'] = $_POST["user_type_id"];
             $_SESSION['dob'] = $_POST["dob"];
             $_SESSION['mail'] = $_POST["mail"];
             $_SESSION['pseudo'] = $_POST["pseudo"];
@@ -92,7 +85,7 @@
 
             // Finally, if all conditions are respected, valid is true, therefore, redirect user to page "Recherche.php"
             // else, redirect the user again to the page "Achat.php" by displaying submitted values
-            if ($_SESSION['validPassword'] && $_SESSION['pseudo'] && $_SESSION['validUserType'] && $_SESSION['validCivility'] &&
+            if ($_SESSION['validPassword'] && $_SESSION['pseudo'] && $_SESSION['validCivility'] &&
             $_SESSION['validAge'] && $_SESSION['validLN'] && $_SESSION['validFN'] && $_SESSION['validMail']){
                 header('Location: ../main/Recherche.php');
                 exit();

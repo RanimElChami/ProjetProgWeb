@@ -298,87 +298,66 @@
 								<th scope="col">Prix</th>
 								<th scope="col">Quantité</th>
 								<th scope="col">Actions</th>
-								<th scope="col">Total</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">
-									<?php
-										if (count($_SESSION['commande'])!=0) {
-											foreach ($_SESSION['commande'] as $select) { ?>
-												<span>
-													<?php echo $select;?>
-												</span>
-									<?php
+							<?php
+							$iterator = new MultipleIterator();
+							$iterator->attachIterator(new ArrayIterator($_SESSION['commande']));
+							$iterator->attachIterator(new ArrayIterator($_SESSION['prices']));
+							$iterator->attachIterator(new ArrayIterator($_SESSION["qte"]));
+							$h=0;
+							$s=0;
+							foreach ($iterator as $item){?>
+								<tr>
+									<th scope="row">
+										<span><?php echo $item[0];?></span>
+									</th>
+									<td>
+										<?php echo $item[1];?>
+										<?php
+											$_SESSION['total']=0;
+											$c=0;
+											foreach ($_SESSION['prices'] as $prix) {
+												$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
+												$c+=1;
 											}
-										} else {
-											echo "<p>-</p>";
-										}
-									?>
-								</th>
-								<td>
-									<?php
-									if (count($_SESSION['prices'])!=0) {
-										foreach ($_SESSION['prices'] as $prix) {?>
-										<span>
-											<?php echo $prix;?>
-										</span>
-									<?php }
-										$_SESSION['total']=0;
-										$c=0;
-										foreach ($_SESSION['prices'] as $prix) {
-											$_SESSION['total']=$_SESSION['total']+$prix*$_SESSION['qte'][$c];
-											$c+=1;
-										}
-									} else {
-										echo "<p>-</p>";
-									}
-									?>
-								</td>
-								<td>
-									<?php
-									$h=0;
-									foreach ($_SESSION["qte"] as $quant){ ?>
+										?>
+									</td>
+									<td>
 										<form class="recap-form" method="POST">
 											<span>
 												<button class="btn btn-light" name='<?php echo $h."quantmas" ?>'><i class="fas fa-chevron-up"></i></button>
-												<?php echo $quant;?>
+												<?php echo $item[2];?>
 												<button class="btn btn-light" name='<?php echo $h."quantminus" ?>'><i class="fas fa-chevron-down"></i></button>
 											</span>
 										</form>
-									<?php $h+=1; } ?>
-								</td>
-								<td>
-									<?php
-										if (count($_SESSION['qte'])!=0) {
-											$s=0;
-											foreach ($_SESSION['qte'] as $qte) {?>
-												<form class="recap-form" method="POST">
-													<span>
-														<button class="btn btn-danger delete-item" name='<?php echo $s; ?>'><i class="fas fa-trash"></i></button>
-													</span>
-												</form>
-									<?php $s+=1;
-											}
-										}
-										else {
-											echo "<p>-</p>";
-										} ?>
-								</td>
-								<td>
-									<?php echo $_SESSION['total']; ?>
-								</td>
+										<?php $h+=1; ?>
+									</td>
+									<td>
+										<form class="recap-form" method="POST">
+											<span>
+												<button class="btn btn-danger delete-item" name='<?php echo $s; ?>'><i class="fas fa-trash"></i></button>
+											</span>
+										</form>
+										<?php $s+=1;?>
+									</td>
+								</tr>
+							<?php } ?>
+							<tr>
+								<th colspan="4">
+									<?php echo "<h5>Total : ".$_SESSION['total']."</h5>";?>
+								</th>
 							</tr>
 						</tbody>
 					</table>
 					<form method="POST">
 						<div class="row">
 							<div class="col">
-								<input type="submit" name="valider" class="btn btn-success" value="Valider votre panier">
+								<input type="submit" name="vider" class="btn btn-danger" value="Vider votre panier" >
 							</div>
 							<div class="col">
-								<input type="submit" name="vider" class="btn btn-danger" value="Vider votre panier" >
+								<input type="submit" name="valider" class="btn btn-success" value="Valider votre panier">
 							</div>
 						</div>
 					</form>
