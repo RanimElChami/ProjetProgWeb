@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    if (isset($_SESSION['user_type_name'])) {echo $_SESSION['user_type_name'];}
+?>
 <!DOCTYPE html>
 
 <head>

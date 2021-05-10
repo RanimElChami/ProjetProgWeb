@@ -1,94 +1,99 @@
-
-*{
-	margin:0;
-	padding:0;
-}
-h4{
-	color:#343a40;
+h4 {
+    color: #343a40;
 }
 
-.infos-pers{
-	border: 1.5px solid #343a40;
-	margin:2%;
-	width: 97%;
-}
-.infos-titre{
-	text-align: center;
-}
-.infos-content{
-	width: 100%;
-	display:flex;
-	justify-content: space-between;
-
+.infos-pers {
+    border: 1.5px solid #343a40;
+    margin: 2%;
+    width: 97%;
 }
 
-.infos-content div{
-	display:grid;
-}
-.form-order{
-	height: 200px;
-}
-.form-order div form{
-	margin-left:5%;
-}
-.form-order div form div{
-	float: left;
-	width: 25%;
-	padding-left: 2%;
-
+.infos-titre {
+    text-align: center;
 }
 
-.prod-sel{
-	border: 1.5px solid #343a40;
-	margin:2%;
-	width: 97%;
-	height: 600px;
-}
-.prod-sel-content{
-	width: 100%;
-	display:flex;
-	justify-content: space-between;
-	margin-bottom:5%;
-
+.infos-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
-.prod-sel-content div{
-	display:grid;
+.infos-content div {
+    display: grid;
 }
 
-.recherche{
-	margin-left: 11.6%; 
-	width: 17.6%;
-	margin-top:3%;
+.form-order {
+    height: 200px;
 }
-.recherche form input{
-	width: 170%
+
+.form-order div form {
+    margin-left: 5%;
 }
-.btn{
-	width: 94.3%;
+
+.form-order div form div {
+    float: left;
+    width: 25%;
+    padding-left: 2%;
+}
+
+.prod-sel {
+    border: 1.5px solid #343a40;
+    margin: 2%;
+    width: 97%;
+    height: 600px;
+}
+
+.prod-sel-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+.prod-sel-content div {
+    display: grid;
+}
+
+.recherche {
+    margin-left: 11.6%;
+    width: 17.6%;
+    margin-top: 3%;
+}
+
+.recherche form input {
+    width: 170%
+}
+
+.btn {
+    width: 94.3%;
     margin-top: 3%
 }
-.con{
-	border: 1.5px solid #343a40; 
-	margin:2%;
-	width: 97%;
+
+.con {
+    border: 1.5px solid #343a40;
+    margin: 2%;
+    width: 97%;
 }
-#quant{
-	display: block
+
+#quant {
+    display: block
 }
-.mas{
-	margin-left: 10px;
+
+.mas {
+    margin-left: 10px;
     border: 1px solid black;
     padding-left: 5px;
     padding-right: 5px;
 }
-.menos{
-	margin-right: 10px;
+
+.menos {
+    margin-right: 10px;
     border: 1px solid black;
     padding-left: 5px;
     padding-right: 5px;
 }
-#quantiacht{
-	margin-right:5px;
-	margin-left: 5px;
+
+#quantiacht {
+    margin-right: 5px;
+    margin-left: 5px;
 }

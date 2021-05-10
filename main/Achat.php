@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    include('../APIs/include/dbConnection.php');
+?>
 <!DOCTYPE html>
 
 <head>
@@ -8,10 +12,6 @@
 
 <body>
     <?php include('layout/Menu.php'); ?>
-    <?php
-        session_start();
-        include('../APIs/include/dbConnection.php');
-    ?>
 
     <div class="banner">
         <h2>Informations Personelles</h2>

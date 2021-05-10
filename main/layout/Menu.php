@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
         <img class="d-inline-block align-top" src="./images/library-logo.png" alt="Logo" />
@@ -47,5 +45,3 @@
         </ul>
     </div>
 </nav>
-
-<?php session_destroy(); ?>

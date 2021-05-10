@@ -45,6 +45,22 @@
     text-align: center;
 }
 
+.recap-form {
+    margin: 0 !important;
+}
+
+.delete-item {
+    width: auto !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    float: none !important;
+}
+
+.recap .prod-sel-content {
+    margin: 0 !important;
+}
+
 
 /* Créer commande */
 

@@ -1,6 +1,7 @@
 <?php
-include('../APIs/GetAllCategories.php');
-session_start(); ?>
+    include('../APIs/GetAllCategories.php');
+    session_start();
+?>
 <!DOCTYPE html>
     <head>
         <title>Update Produits</title>

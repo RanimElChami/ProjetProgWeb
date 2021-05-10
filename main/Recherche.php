@@ -6,8 +6,7 @@
     <?php
 		include('layout/Header.php');
 		include ('../APIs/include/dbConnection.php');
-	?>
-    <?php
+
     	session_start();
     	if(!isset($_SESSION['total'])){
     		$_SESSION['total'] = 0;
@@ -58,7 +57,7 @@
 		if(isset($_POST['valider'])){
 			if(count($_SESSION['commande'])!=0){
 				unset($_POST['valider']);
-				location("recap.php");
+				location("Recapitulatif.php");
 			}
 		}
 
@@ -199,10 +198,10 @@
 							<div class="row">
 								<div class="col">
 									<select name="search" class="custom-select">
-										<option>Résultat de votre recherche</option>
+										<option>Résultat(s) de votre recherche</option>
 										<?php
 											while($show=mysqli_fetch_array($articles)){
-												echo "<option>".$show['book_name']."</option><br/>";
+												echo "<option>".$show['book_name']."</option>";
 											}
 										?>
 									</select>
@@ -210,11 +209,9 @@
 								<div class="col">
 									<select name='livre' class="custom-select" id='livre'>
 										<option>Selectionner un livre</option>
-										<?php
-											$sql="SELECT book_name FROM books";
-											$result= mysqli_query($conn,$sql);
-											while($show=mysqli_fetch_array($result)){
-												echo "<option>".$show['book_name']."</option><br/>";
+										<?php include('../APIs/GetAllBooks.php');
+											foreach ($booksArray as $book){
+												echo "<option>".$book['book_name']."</option>";
 											}
 										?>
 									</select>
@@ -223,10 +220,9 @@
 									<select name='prod' class="custom-select">
 										<option>Selectionner un produit</option>
 										<?php
-											$sql2="SELECT product_name FROM products";
-											$result2= mysqli_query($conn,$sql2);
-											while($show2=mysqli_fetch_array($result2)){
-												echo "<option>".$show2['product_name']."</option><br/>";
+											include('../APIs/GetAllProducts.php');
+											foreach ($productsArray as $product){
+												echo "<option>".$product['product_name']."</option>";
 											}
 										?>
 									</select>
@@ -243,14 +239,15 @@
 
 	<section>
 		<?php
+			include ('../APIs/include/dbConnection.php');
 			if (isset($_POST['submit'])){
 				$t=0;
 				foreach($_SESSION['commande'] as $select){
-						unset($_GET[$t.'quantmas']);
-			    		unset($_GET[$t.'quantminus']);
-			    		$t+=1;
+					unset($_GET[$t.'quantmas']);
+			    	unset($_GET[$t.'quantminus']);
+			    	$t+=1;
 				}
-				if($_POST['search']!='Résultat de votre recherche'){
+				if($_POST['search']!='Résultat(s) de votre recherche'){
 					if(!in_array($_POST['search'], $_SESSION['commande'])){
 						array_push($_SESSION['commande'], $_POST['search']);
 						array_push($_SESSION['qte'], 1);
@@ -300,6 +297,7 @@
 								<th scope="col">Nom du produit/livre</th>
 								<th scope="col">Prix</th>
 								<th scope="col">Quantité</th>
+								<th scope="col">Actions</th>
 								<th scope="col">Total</th>
 							</tr>
 						</thead>
@@ -340,12 +338,25 @@
 								</td>
 								<td>
 									<?php
+									$h=0;
+									foreach ($_SESSION["qte"] as $quant){ ?>
+										<form class="recap-form" method="POST">
+											<span>
+												<button class="btn btn-light" name='<?php echo $h."quantmas" ?>'><i class="fas fa-chevron-up"></i></button>
+												<?php echo $quant;?>
+												<button class="btn btn-light" name='<?php echo $h."quantminus" ?>'><i class="fas fa-chevron-down"></i></button>
+											</span>
+										</form>
+									<?php $h+=1; } ?>
+								</td>
+								<td>
+									<?php
 										if (count($_SESSION['qte'])!=0) {
 											$s=0;
 											foreach ($_SESSION['qte'] as $qte) {?>
-												<form method='post'>
+												<form class="recap-form" method="POST">
 													<span>
-														<button name='<?php echo $s; ?>' ><i class="fas fa-trash"></i></button>
+														<button class="btn btn-danger delete-item" name='<?php echo $s; ?>'><i class="fas fa-trash"></i></button>
 													</span>
 												</form>
 									<?php $s+=1;

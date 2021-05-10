@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../main/css/bootstrap.min.css"/>
+
 <?php
   include("include/dbConnection.php");
   if(isset($_POST['pseudo']) && isset($_POST['password'])){
@@ -14,6 +16,7 @@
 
       if ($result->num_rows == 1) {
         while($row = $result->fetch_assoc()) {
+          if ($row["user_type_name"]=='Administrateur'){
             // Start a session
             session_start();
             // Create two session variables and set their value equal to the operator id
@@ -26,22 +29,35 @@
             $_SESSION['mail'] = $row["mail"];
             $_SESSION['pseudo'] = $row["pseudo"];
             $_SESSION['password'] = $row["password"];
+            $_SESSION['nb_orders'] = $row["nb_orders"];
             $_SESSION['ancien']=true;
+          } else {
+            echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
+            <h4>Vous devez être administrateur pour se connecter!</h4>
+            </div>";
+            exit();
+          }
         }
         // Redirect user to page "Recherche.php"
         header('Location: ../main/Recherche.php');
         exit();
       } else {
-        echo "<h2>Wrong username/password combination</h2>";
+        echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
+        <h4>Votre mot de passe et/ou votre identifiant incorrect(s)</h4>
+        </div>";
       }
       $stmt -> close();
       $conn -> close();
     }
     else {
-      echo "<h2>Username/password field must be filled</h2>";
+      echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
+      <h4>Les champs de mot de passe et d'identifiant doivent être remplis</h4>
+      </div>";
     }
   }
   else {
-    echo "<h2>Username/password cannot be null</h2>";
+    echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
+    <h4>Votre mot de passe et/ou votre identifiant ne peuvent pas être null</h4>
+    </div>";
   }
 ?>
